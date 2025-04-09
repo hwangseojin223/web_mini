@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메가박스</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 메뉴바 -->
+    <nav>
+        <div class="nav"></div>
+            <ul class="nav-links">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">영화</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">전체영화</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">예매</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">빠른예매</a></li>
+                    <li><a class="dropdown-item" href="#">상영시간표</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">극장</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">전체극장</a></li>
+                    <li><a class="dropdown-item" href="#">특별관</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">이벤트</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">진행중 이벤트</a></li>
+                    <li><a class="dropdown-item" href="#">특별 이벤트</a></li>
+                    <li><a class="dropdown-item" href="#">당첨자 발표</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown"><a href="#">스토어</a></li>
+                <li class="dropdown"><a href="#">혜택</a></li>
+                <li class="dropdown"><a href="#">마이페이지</a></li>
+            </ul>
+    </nav>
+    <!-- 검색 폼 -->
+    <div class="search">
+        <form id="search-form">
+            <input type="text" id="search-input" placeholder="영화 제목 입력" />
+            <button type="submit" class="btn btn-outline-dark">검색</button>
+          </form>
+          <ul id="search-result"></ul>
+    </div>
+    <!-- 검색 폼 아래에 최신 영화 리스트 -->
+    <div id="latest-movie-wrapper">
+        <h3 style="margin-left:20px;">🎬 박스오피스</h3>
+        <div id="latest-movie-list"></div> 
+        <div id="moviebtn">
+            <button type="button" id="prev-btn" class="btn btn-outline-dark">이전</button>
+            <button type="button" id="next-btn" class="btn btn-outline-dark">다음</button>
+        </div>
+    </div>
+    <!-- 공지사항 -->
+    <div class="notice">
+        <div id="noticelogo">공지사항</div>
+        <ul class="noticeList">
+            <li><a href="#">공지사항 1</a></li>
+            <li><a href="#">공지사항 2</a></li>
+            <li><a href="#">공지사항 3</a></li>
+            <li><a href="#">공지사항 4</a></li>
+        </ul>
+    </div>
+    <!-- 아래메뉴바 -->
+    <footer>
+        <ul class="footerList">
+            <li>고객센터</li>
+            <li>자주 묻는 질문</li>
+            <li>1:1 문의</li>
+            <li>단체 대관 문의</li>
+            <li>분실 문의/접수</li>
+        </ul>
+    </footer>
+
+    <script>
+        $(document).ready(function(){
+            $(".dropdown").hover(
+                function() {
+                    $(this).find(".submenu").stop(true, true).slideDown(300);
+                },
+                function() {
+                    $(this).find(".submenu").stop(true, true).slideUp(300);
+                }
+            );
+        });
+        // 공지사항
+        $(document).ready(function () {
+            
+            function slideNotice() {
+              const first = $('.noticeList li:first');
+              first.slideUp(500, function () {
+                $(this).appendTo('.noticeList').show(); // 마지막으로 보내고 다시 보이게
+              });
+            }
+        
+            setInterval(slideNotice, 10000); // 10초에 한 번 실행
+          });
+
+
+        // 영화출력
+        let latestMovies = [];
+        let currentPage = 0;
+      
+        // 최신 영화 10개 불러오기 (박스오피스 TOP 10 기준)
+        $(document).ready(function () {
+          const today = new Date();
+          today.setDate(today.getDate() - 1); // 어제 날짜 기준
+          const y = today.getFullYear();
+          const m = String(today.getMonth() + 1).padStart(2, '0');
+          const d = String(today.getDate()).padStart(2, '0');
+          const targetDt = `${y}${m}${d}`;
+      
+          $.ajax({
+            url: 'https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json',
+            type: 'GET',
+            data: {
+              key: '455015aa3f97520437568b039887193b',
+              targetDt: targetDt
+            },
+            success: function (res) {
+              const boxOfficeList = res.boxOfficeResult.dailyBoxOfficeList.slice(0, 10);
+              latestMovies = boxOfficeList.map(m => 
+              ({
+                title: m.movieNm,
+                code: m.movieCd,
+                openDt: m.openDt,
+                audiCnt: m.audiCnt,
+                audiAcc: m.audiAcc
+              }));
+              renderLatestMovies();
+            }
+          });
+        });
+      
+        function renderLatestMovies() {
+            $('#latest-movie-list').empty();
+            let shownCount = 0;
+            let index = currentPage * 5;
+            
+            function tryNext() {
+              if (shownCount >= 5 || index >= latestMovies.length) return;
+          
+              const movie = latestMovies[index];
+              index++;
+          
+              fetchPoster(movie.title, null, function (posterUrl) {
+                if (posterUrl) {
+                  const html = `
+                  <div class="movie-card">
+                    <div class="poster-container" style="text-align:center; margin: 10px;">
+                        <img class ="movie-poster" src="${posterUrl}" width="150" style="border-radius:10px; margin-bottom:10px;">
+        
+                        <div class="overlay">
+                            <p>개봉일: ${movie.openDt}</p>
+                            <p>당일 관객: ${Number(movie.audiCnt).toLocaleString()}명</p>
+                            <p>누적 관객: ${Number(movie.audiAcc).toLocaleString()}명</p>
+                            <a href="detail.html?movieCd=${encodeURIComponent(movie.code)}" class="btn btn-light btn-sm detail-btn">상세보기</a>
+                        </div>
+                    </div>
+                     <div class="movie-info" style="margin-top: 10px;">
+                        <div style="font-weight:bold;">${movie.title}
+                        <a href="reserve.html?movieCd=${encodeURIComponent(movie.code)}" class="btn btn-outline-dark">예매하기</a>
+                    </div>
+                    </div>
+                </div>`;
+                  $('#latest-movie-list').append(html);
+                  shownCount++;
+                }
+                tryNext(); // 재귀 호출로 다음 영화 시도
+              });
+            }
+          
+            tryNext();
+        }
+        // 이전영화
+        $('#prev-btn').click(() => {
+          if (currentPage > 0) {
+            currentPage--;
+            renderLatestMovies();
+          }
+        });
+        // 다음영화
+        $('#next-btn').click(() => {
+          if ((currentPage + 1) * 5 < latestMovies.length) {
+            currentPage++;
+            renderLatestMovies();
+          }
+        });
+      
+        // TMDB 포스터 불러오기
+        function fetchPoster(title, year, callback) {
+          $.ajax({
+            url: 'https://api.themoviedb.org/3/search/movie',
+            type: 'GET',
+            data: {
+              api_key: '234ef78df71e08e515ca2d691678e0f1',
+              query: title,
+              year: year,
+              language: 'ko'
+            },
+            success: function (res) {
+              const posterPath = res.results[0]?.poster_path;
+              callback(posterPath ? `https://image.tmdb.org/t/p/w200${posterPath}` : null);
+            },
+            error: function () {
+              callback(null);
+            }
+          });
+        }
+        // 검색창 이동
+        // 뒤로가기 후 페이지 로드될 때 실행됨
+        window.addEventListener("pageshow", function (event) {
+            if (event.persisted || (window.performance && window.performance.getEntriesByType("navigation")[0].type === "back_forward")) {
+              $('#search-input').val('');  // 검색 input 초기화
+            }
+          });
+        $('#search-form').submit(function (e) {
+          e.preventDefault();
+          const movieName = $('#search-input').val().trim();
+          if (!movieName) return;
+      
+          // 검색어를 URL 파라미터로 전달
+          const encoded = encodeURIComponent(movieName);
+          window.location.href = `searchresult.html?query=${encoded}`;
+        });
+    </script>
+      
+</body>
+</html>
