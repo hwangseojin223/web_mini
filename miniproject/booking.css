@@ -34,9 +34,9 @@ body {
   }
   
   
-  #people-selector {
-    margin-bottom: 20px;
-  }
+  #people-selector span {
+    font-weight: bold;
+  }  
   
   #people-selector button {
     margin-right: 8px;
@@ -157,4 +157,39 @@ body {
     font-size: 18px;
     color: #333;
   }
+  
+  #people-selector {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .person-type {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f0f0f0;
+    padding: 6px 10px;
+    border-radius: 6px;
+  }
+  
+  .person-type label {
+    width: 50px;
+  }
+  
+  .person-type button {
+    padding: 4px 8px;
+    border: 1px solid #aaa;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .count-box {
+    min-width: 30px;
+    text-align: center;
+    display: inline-block;
+  }
+  
   

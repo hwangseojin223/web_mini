@@ -4,72 +4,95 @@
   <meta charset="UTF-8">
   <title>빠른예매</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
   <link rel="stylesheet" href="booking.css">
 </head>
 <body>
   <h1>빠른예매</h1>
   <hr>
-<!-- 전체 영역 -->
-<div class="booking-container">
-  <!-- 좌측: 인원 선택 + 좌석 선택 -->
-  <div class="left-panel">
-    <h3>관람 인원 선택</h3>
-    <div id="people-selector">
-      <button data-count="1">1명</button>
-      <button data-count="2">2명</button>
-      <button data-count="3">3명</button>
-      <button data-count="4">4명</button>
-    </div>
-    
-    <h3>좌석 선택</h3>
-    <div class="screen-label">
-      <div class="screen-curve">SCREEN</div>
-    </div>    
-    <div id="seat-map"></div>
-  </div>
 
-<!-- 우측: 영화 정보 + 요약 -->
-<div class="right-panel" id="summary-card" style="width: 320px; background-color: #1e1e1e; color: white; padding: 20px; border-radius: 16px;">
-  <div style="display: flex; gap: 16px;">
-    <img id="movie-poster" src="" alt="영화 포스터" style="width: 90px; height: 130px; object-fit: cover; border-radius: 6px; border: 1px solid #555;">
-    
-    <div style="flex: 1;">
-      <div style="font-size: 12px; color: #ccc; margin-bottom: 4px;">2D</div>
-      <h2 id="movie-title" style="font-size: 18px; margin: 0;">영화 제목</h2>
-      <p id="movie-time" style="font-size: 14px; color: #aaa; margin-top: 4px;">극장 | 날짜 | 시간</p>
-    </div>
-  </div>
+  <!-- 전체 영역 -->
+  <div class="booking-container">
 
-  <div style="border-top: 1px solid #555; margin-top: 16px; padding-top: 12px; font-size: 14px;">
-    <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-      <span style="color: #ccc;">선택좌석</span>
-      <span id="selected-seats" style="font-weight: 500;">없음</span>
-    </div>
-    <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-      <span style="color: #ccc;">남은좌석</span>
-      <span id="remaining">0/100석</span>
-    </div>
-    <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-      <span style="color: #ccc;">총 인원</span>
-      <span id="total-people">1명</span>
-    </div>
-    <div style="display: flex; justify-content: space-between;">
-      <span style="color: #ccc;">최종 결제금액</span>
-      <span id="total-price" style="color: #facc15; font-weight: bold;">0원</span>
-    </div>
-  </div>
+    <!-- 좌측: 인원 선택 + 좌석 선택 -->
+    <div class="left-panel">
 
-  <div class="button-container">
-    <button id="prev-btn">이전</button>
-    <button id="next-btn">다음</button>
-  </div>
-  
-</div>
+      <!-- 👤 인원 선택 (스크린 위에 배치) -->
+      <div id="people-selector" class="d-flex gap-4 align-items-center p-3 bg-light rounded border">
+        <!-- 인원 선택 영역 -->
+        <div class="d-flex align-items-center gap-2">
+          <span>성인</span>
+          <button class="btn btn-outline-secondary decrease" data-type="adult">-</button>
+          <span id="adult-count" class="count-box">1</span>
+          <button class="btn btn-outline-secondary increase" data-type="adult">+</button>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span>청소년</span>
+          <button class="btn btn-outline-secondary decrease" data-type="teen">-</button>
+          <span id="teen-count" class="count-box">0</span>
+          <button class="btn btn-outline-secondary increase" data-type="teen">+</button>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span>우대</span>
+          <button class="btn btn-outline-secondary decrease" data-type="discount">-</button>
+          <span id="discount-count" class="count-box">0</span>
+          <button class="btn btn-outline-secondary increase" data-type="discount">+</button>
+        </div>
+      </div>
+      
+      <!-- 구분선 -->
+      <hr class="my-3">
+      
+      
 
 
+      <!-- 🎬 스크린 표시 -->
+      <div class="screen-label">
+        <div class="screen-curve">SCREEN</div>
+      </div>    
+
+      <!-- 💺 좌석 맵 -->
+      <div id="seat-map"></div>
+
+    </div>
+
+    <!-- 우측: 영화 정보 + 요약 카드 -->
+    <div class="right-panel" id="summary-card" style="width: 320px; background-color: #1e1e1e; color: white; padding: 20px; border-radius: 16px;">
+      <div style="display: flex; gap: 16px;">
+        <img id="movie-poster" src="" alt="영화 포스터" style="width: 90px; height: 130px; object-fit: cover; border-radius: 6px; border: 1px solid #555;">
+        
+        <div style="flex: 1;">
+          <div style="font-size: 12px; color: #ccc; margin-bottom: 4px;">2D</div>
+          <h2 id="movie-title" style="font-size: 18px; margin: 0;">영화 제목</h2>
+          <p id="movie-time" style="font-size: 14px; color: #aaa; margin-top: 4px;">극장 | 날짜 | 시간</p>
+        </div>
+      </div>
+
+      <div style="border-top: 1px solid #555; margin-top: 16px; padding-top: 12px; font-size: 14px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+          <span style="color: #ccc;">선택좌석</span>
+          <span id="selected-seats" style="font-weight: 500;">없음</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+          <span style="color: #ccc;">남은좌석</span>
+          <span id="remaining">0/100석</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+          <span style="color: #ccc;">총 인원</span>
+          <span id="total-people">1명</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span style="color: #ccc;">최종 결제금액</span>
+          <span id="total-price" style="color: #facc15; font-weight: bold;">0원</span>
+        </div>
+      </div>
+
+      <div class="button-container" style="margin-top: 20px; display: flex; justify-content: space-between;">
+        <button id="prev-btn">이전</button>
+        <button id="next-btn">다음</button>
+      </div>
     </div>
   </div>
+
   <script src="booking.js"></script>
 </body>
 </html>
