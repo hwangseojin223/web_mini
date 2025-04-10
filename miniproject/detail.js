@@ -142,6 +142,11 @@ $(function(){
     }
   })
 
+  $('#reserveBtn').click(function() {
+    window.location.href = `reserve.html?movieCd=${movieCd}`;
+  });
+  
+
   // /**네비게이션 바 */
   // $(".dropdown").hover(
   //   function() {
