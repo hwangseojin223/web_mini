@@ -1,0 +1,160 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f5f5f5;
+  }
+  
+  .booking-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  
+  .left-panel {
+    flex: 2;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+
+  }
+  
+  .right-panel {
+    flex: 1;
+    background: #1b1b1b;
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+  
+    display: flex;              /* ✅ Flexbox 적용 */
+    flex-direction: column;     /* ✅ 세로 방향 */
+    justify-content: space-between;  /* ✅ 요소들 위-아래 정렬 */
+  }
+  
+  
+  #people-selector {
+    margin-bottom: 20px;
+  }
+  
+  #people-selector button {
+    margin-right: 8px;
+    padding: 8px 16px;
+    border: 1px solid #999;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+  }
+  
+  #people-selector button.active {
+    background: #512da8;
+    color: #fff;
+    border: none;
+  }
+  
+  #seat-map {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .seat-row {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .seat {
+    width: 32px;
+    height: 32px;
+    background: #e0e0e0;
+    text-align: center;
+    line-height: 32px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .seat.selected {
+    background: #7c4dff;
+    color: #fff;
+  }
+  
+  .seat.occupied {
+    background: #999;
+    cursor: not-allowed;
+    color: #fff;
+  }
+  
+  .right-panel h2 {
+    margin-top: 0;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+  
+  .summary {
+    margin-top: 20px;
+  }
+  
+  .summary div {
+    margin-bottom: 10px;
+  }
+  
+/* ✅ 버튼 영역 스타일 */
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  /* ✅ 이전/다음 버튼 동일 스타일 적용 */
+  .button-container button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  /* 🎨 이전 버튼 색상 */
+  #prev-btn {
+    background: #555;
+    color: white;
+  }
+  
+  /* 🎨 다음 버튼 색상 */
+  #next-btn {
+    background: #7c4dff;
+    color: white;
+  }
+  
+  #next-btn:hover {
+    background: #673ab7;
+  }
+  
+  #prev-btn:hover {
+    background: #333;
+  }
+  
+  
+  .screen-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .screen-curve {
+    width: 300px;
+    height: 50px;
+    background: #ddd;
+    border-radius: 0 0 150px 150px;
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+  }
+  
