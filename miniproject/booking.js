@@ -91,7 +91,9 @@ document.getElementById('seat-btn').addEventListener('click', ()=>{
       }).join(',');
     
       const params = new URLSearchParams(window.location.search);
-      const url = `bookingInfo.html?movie=${params.get('movie')}&theater=${params.get('theater')}&date=${params.get('date')}&time=${params.get('time')}&seats=${selectedSeatList}&people=${maxPeople}`;
+      const url = `payment.html?movie=${params.get('movie')}&theater=${params.get('theater')}&date=${params.get('date')}&time=${params.get('time')}&seats=${selectedSeatList}&people=${maxPeople}`;
+      window.location.href = url;
+
     
       window.location.href = url;
 })

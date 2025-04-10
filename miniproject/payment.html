@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>결제 페이지</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      padding: 40px;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f7f9fc;
+    }
+
+    .card {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .card h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .info-item {
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+
+    .info-label {
+      font-weight: 600;
+      color: #555;
+    }
+
+    .btn-pay {
+      margin-top: 30px;
+      width: 100%;
+      font-size: 18px;
+      padding: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card bg-white">
+    <h2>결제 정보 확인</h2>
+    <div class="info-item"><span class="info-label">영화:</span> <span id="movie"></span></div>
+    <div class="info-item"><span class="info-label">극장:</span> <span id="theater"></span></div>
+    <div class="info-item"><span class="info-label">날짜:</span> <span id="date"></span></div>
+    <div class="info-item"><span class="info-label">시간:</span> <span id="time"></span></div>
+    <div class="info-item"><span class="info-label">좌석:</span> <span id="seats"></span></div>
+    <div class="info-item"><span class="info-label">인원:</span> <span id="people"></span></div>
+    
+    <button class="btn btn-success btn-pay" onclick="completePayment()">💳 결제하기</button>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById('movie').textContent = params.get('movie');
+    document.getElementById('theater').textContent = params.get('theater');
+    document.getElementById('date').textContent = `${params.get('date').slice(4,6)}월 ${params.get('date').slice(6)}일`;
+    document.getElementById('time').textContent = params.get('time');
+    document.getElementById('seats').textContent = params.get('seats');
+    document.getElementById('people').textContent = params.get('people') + "명";
+
+    function completePayment() {
+      alert("결제가 완료되었습니다! 즐거운 영화 관람 되세요 🎉");
+      window.location.href = "index.html"; // 홈으로 리디렉션 (필요하면 수정 가능)
+    }
+  </script>
+</body>
+</html>
