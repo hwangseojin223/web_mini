@@ -99,13 +99,15 @@
     </div>
     <!-- 공지사항 -->
     <div class="notice">
-        <div id="noticelogo">공지사항</div>
-        <ul class="noticeList">
+        <div id="noticelogo">📢 공지사항</div>
+        <div class="noticeList">
+          <ul class="noticeWrap">
             <li><a href="#">공지사항 1</a></li>
             <li><a href="#">공지사항 2</a></li>
             <li><a href="#">공지사항 3</a></li>
             <li><a href="#">공지사항 4</a></li>
         </ul>
+        </div>
     </div>
     <!-- 아래메뉴바 -->
     <footer>
@@ -119,21 +121,6 @@
     </footer>
 
     <script>
-      
-        // 공지사항
-        $(document).ready(function () {
-            
-            function slideNotice() {
-              const first = $('.noticeList li:first');
-              first.slideUp(500, function () {
-                $(this).appendTo('.noticeList').show(); // 마지막으로 보내고 다시 보이게
-              });
-            }
-        
-            setInterval(slideNotice, 10000); // 10초에 한 번 실행
-          });
-
-
         // 영화출력
         let latestMovies = [];
         let currentPage = 0;
@@ -195,9 +182,9 @@
                             <a href="detail.html?movieCd=${encodeURIComponent(movie.code)}" class="btn btn-light btn-sm detail-btn">상세보기</a>
                         </div>
                     </div>
-                     <div class="movie-info" style="margin-top: 10px;">
-                        <div style="font-weight:bold;">${movie.title}
-                        <a href="reserve.html?movieCd=${encodeURIComponent(movie.code)}" class="btn btn-outline-dark">예매하기</a>
+                     <div class="movie-info" >
+                        <div class="movie-info-title" >${movie.title}
+                        <a href="reserve.html?movieCd=${encodeURIComponent(movie.code)}" class="reserve-btn">예매하기</a>
                     </div>
                     </div>
                 </div>`;
