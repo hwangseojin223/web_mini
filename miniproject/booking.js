@@ -10,8 +10,12 @@ const occupiedCount = totalSeats - remainingSeats;
 const rows = 10;
 const cols = 10;
 
-document.getElementById('booking-info').textContent =
-    `${movie} | ${theater} | ${date.slice(4,6)} 월 ${date.slice(6)}일 | ${time}`;
+document.getElementById('booking-info').innerHTML =
+  `<span class="movie"> ${movie}</span> | 
+   <span class="theater">${theater}</span> | 
+   <span class="seatInfo"> 남은좌석 ${remainingSeats}/${totalSeats}</span> |
+   <span class="date">${date.slice(4,6)}월 ${date.slice(6)}일</span> | 
+   <span class="time">${time}</span>`;
 
  let selectedCount = 1;
  // 버튼에서 인원 수 선택하기
