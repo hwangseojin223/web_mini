@@ -7,9 +7,10 @@
     <style>
         .seat-grid {
           display: grid;
-          grid-template-columns: repeat(10, 40px);
+          grid-template-columns: repeat(15, 40px);
           gap: 5px;
           margin: 20px 0;
+          justify-content: center;
         }
       
         .seat {
@@ -32,10 +33,11 @@
         }
       
         .screen {
+            width: 70%;
+            margin: 10px auto;
           background-color: #ccc;
           text-align: center;
           padding: 10px;
-          margin: 10px 0;
           font-weight: bold;
         }
       </style>
@@ -43,14 +45,17 @@
 <body>
     <h2>좌석선택</h2>
     <div id="booking-info"></div>
-    <label for="peoplecnt">인원 수:</label>
-    <select id="peoplecnt">
-    <option value="1">1명</option>
-    <option value="2">2명</option>
-    <option value="3">3명</option>
-    <option value="4">4명</option>
-    <option value="5">5명</option>
-    </select>
+    <div class="pcnt">
+        <label for="peoplecnt">인원 수:</label>
+        <select id="peoplecnt">
+        <option value="1">1명</option>
+        <option value="2">2명</option>
+        <option value="3">3명</option>
+        <option value="4">4명</option>
+        <option value="5">5명</option>
+        </select>
+    </div>
+    
     <div class="screen">screen</div>
    
     <div id="seat" class="seat-grid"></div>

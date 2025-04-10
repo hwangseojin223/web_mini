@@ -6,9 +6,9 @@ const time = params.get('time');
 const totalSeats = parseInt(params.get('total'));
 const remainingSeats = parseInt(params.get('remaining'));
 const occupiedCount = totalSeats - remainingSeats;
-
-const rows = 8;
-const cols = 10;
+console.log(remainingSeats + ': ' + occupiedCount + ':' + totalSeats);
+const rows = 10;
+const cols = 15;
 
 document.getElementById('booking-info').textContent =
     `${movie} | ${theater} | ${date.slice(4,6)} 월 ${date.slice(6)}일 | ${time}`;
