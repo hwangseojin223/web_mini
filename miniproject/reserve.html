@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>빠른예매</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="reservestyle.css">
+</head>
+<body>
+  <h2>빠른예매</h2>
+  <div class="d-flex gap-3">
+    <div>
+      <div class="section-title">날짜</div>
+      <div class="date-selector d-flex">
+        <button class="btn btn-outline-secondary btn-sm">4/9 - 오늘</button>
+        <button class="btn btn-outline-secondary btn-sm">4/10 - 내일</button>
+        <button class="btn btn-outline-secondary btn-sm">4/11 - 금</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="selection-summary" class="alert alert-info mt-4" role="alert">
+    날짜, 영화, 극장, 시간을 선택하면 여기에 표시됩니다.
+  </div>
+
+  <div class="d-flex mt-4">
+    <div style="width: 250px;">
+      <div class="section-title">영화</div>
+      <div id="movie-list" class="border rounded" style="height: 500px; overflow-y: auto;"></div>
+    </div>
+
+    <div class="mx-3" style="width: 300px;">
+      <div class="section-title">극장</div>
+      <div class="border rounded p-2 theater-list-wrapper">
+        <div class="region-list">
+          <div class="region-item" data-region="서울">서울</div>
+          <div class="region-item" data-region="경기">경기</div>
+          <div class="region-item" data-region="인천">인천</div>
+          <div class="region-item" data-region="대전/충청/세종">대전/충청/세종</div>
+          <div class="region-item" data-region="부산/대구/경상">부산/대구/경상</div>
+          <div class="region-item" data-region="광주/전라">광주/전라</div>
+          <div class="region-item" data-region="강원">강원</div>
+          <div class="region-item" data-region="제주">제주</div>
+        </div>
+        <div id="theater-list" class="theater-list"></div>
+      </div>
+    </div>
+
+    <div class="flex-fill">
+      <div class="section-title">시간</div>
+      <div id="time-section" class="border rounded p-4 text-center text-muted">
+        영화와 극장을 선택하시면<br>
+        상영시간표를 비교하여 볼 수 있습니다.
+      </div>
+      <div class="text-end mt-3">
+        <button class="btn btn-primary" id="book-now" disabled>예매하기</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="reservescript.js"></script>
+</body>
+</html>
