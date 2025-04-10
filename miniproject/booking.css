@@ -192,4 +192,18 @@ body {
     display: inline-block;
   }
   
+  .navbar {
+    margin-top: 0px;
+    margin-bottom: 4px;
+    transition: top 0.3s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  body {
+    padding-top: 80px; /* 네비게이션 바 높이만큼 간격 */
+  }
+  
+  #seat-container {
+    margin-top: 80px;
+  }
   
