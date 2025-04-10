@@ -1,4 +1,11 @@
 const apiKey = '21e386e0d770c1af30c85902f8078bd9';
+function getQueryParam(name) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(name);
+}
+
+const preselectedMovieCd = getQueryParam('movieCd');
+
 const targetDate = new Date();
 targetDate.setDate(targetDate.getDate() - 1);
 const formattedDate = targetDate.toISOString().slice(0, 10).replace(/-/g, '');
@@ -128,7 +135,8 @@ document.querySelectorAll('.date-selector button').forEach(button => {
 
 document.getElementById('book-now').addEventListener('click', () => {
   if (selectedMovie && selectedTheater && selectedDate && selectedTime) {
-    const query = `movie=${encodeURIComponent(selectedMovie)}&theater=${encodeURIComponent(selectedTheater)}&date=${selectedDate}&time=${selectedTime}`;
+    const selectedSlot = allTimes.find(t => t.start === selectedTime);
+    const query = `movie=${encodeURIComponent(selectedMovie)}&theater=${encodeURIComponent(selectedTheater)}&date=${selectedDate}&time=${selectedTime}&remaining=${selectedSlot.remaining}&total=${selectedSlot.total}`;
     window.location.href = `booking.html?${query}`;
   }
 });
@@ -151,6 +159,22 @@ fetch(`https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDail
       });
       listEl.appendChild(div);
     });
+        // movieList.forEach(...) 내부 끝난 직후 추가
+        if (preselectedMovieCd) {
+          const preMovie = movieList.find(m => m.movieCd === preselectedMovieCd);
+          if (preMovie) {
+            selectedMovie = preMovie.movieNm;
+            // 해당 movie-item을 선택 표시
+            const items = document.querySelectorAll('.movie-item');
+            items.forEach(el => {
+              if (el.textContent === selectedMovie) {
+                el.classList.add('selected');
+              }
+            });
+            updateTimeSection();
+          }
+        }
+    
   })
   .catch(err => console.error('영화 목록 불러오기 실패:', err));
 

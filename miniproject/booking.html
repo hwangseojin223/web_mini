@@ -1,74 +1,19 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>예매 정보 확인</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background-color: #f8f9fa;
-      text-align: center;
-      padding: 50px;
-    }
-    .ticket-summary {
-      background: white;
-      display: inline-block;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      font-size: 1.2rem;
-    }
-    .ticket-summary h2 {
-      margin-bottom: 20px;
-      color: #5a2a83;
-    }
-    .ticket-summary p {
-      margin: 10px 0;
-    }
-    .btn-home {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #5a2a83;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    .btn-home:hover {
-      background-color: #7a44aa;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>좌석선택</title>
 </head>
 <body>
+    <h2>좌석선택</h2>
+    <div id="booking-info"></div>
+    <div class="screen">screen</div>
+   
+    <div class="seat"></div>
+    <div id="selected-info"></div>
+    <button id="seat-btn">예매 확정</div>
 
-  <div class="ticket-summary">
-    <h2>🎟️ 예매 정보</h2>
-    <p id="movie"></p>
-    <p id="theater"></p>
-    <p id="date"></p>
-    <p id="time"></p>
-    <button class="btn-home" onclick="goHome()">홈으로 돌아가기</button>
-  </div>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const movie = params.get('movie');
-    const theater = params.get('theater');
-    const date = params.get('date');
-    const time = params.get('time');
-
-    document.getElementById('movie').textContent = `🎬 영화: ${movie}`;
-    document.getElementById('theater').textContent = `📍 극장: ${theater}`;
-
-    const dateFormatted = date ? `${date.slice(4,6)}월 ${date.slice(6)}일` : '';
-    document.getElementById('date').textContent = `📅 날짜: ${dateFormatted}`;
-    document.getElementById('time').textContent = `⏰ 시간: ${time}`;
-
-    function goHome() {
-      window.location.href = 'index.html'; // 예매 페이지로 돌아가기
-    }
-  </script>
+    <script src="booking.js"></script>
 </body>
 </html>
