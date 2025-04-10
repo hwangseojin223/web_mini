@@ -28,8 +28,10 @@ $(function(){
           //영화제목 변경
         $('#title').text(movie.movieNm)
         $('#enTitle').text(movie.movieNmEn)
+
+        // 장르르
         $.each(movie.genres, function(index, value){
-          $('.genres').html('<span>' + this.genreNm + '</span>')
+          $('.genres').append('<span>' + this.genreNm + '</span>')
         })
         
         //감독, 개봉일, 러닝타임, 연령등급, 출연진 변경
@@ -45,7 +47,7 @@ $(function(){
 
         //러닝타임
         $('.sub-info #runnigTime').text(movie.showTm + '분')
-        console.log('movie.audit.length : ' + movie.audits.length)
+
 
         /*연령등급
         audits이 가끔 빈 배열일때가 있다. 그런 경우에 분기문*/
@@ -59,7 +61,7 @@ $(function(){
         //출연
         let acs = ''
         $.each(movie.actors.slice(0, 7), function(index, item){
-          acs += item.peopleNm + " "
+          acs += item.peopleNm + " | "
           $('#actors').text(acs)
         });
         
@@ -96,21 +98,28 @@ $(function(){
               //console.log(movieNmOg)
               if(response.results.length > 1){
                 $.each(response.results, function(index, item){
-                  if(((item.release_date.slice(0, 4) === prdYear)&&(item.title == movieTitle)) || (item.title == movieTitle)){
+                  if(((item.release_date.slice(0, 4) === prdYear)&&(item.title == movieTitle))){
                     obj = item;
-                    console.log(obj)
+                    //console.log(obj)
                   }
                 })
               }else{
                 obj = response.results[0]
               }
 
+              const posterPath = obj.poster_path;
+              const backDropPath = obj.backdrop_path
+              const fullPosterUrl = TMDB_IMAGE_BASE + posterPath;
+              const fullBackDropUrl = TMDB_IMAGE_BASE + backDropPath;
               
 
-              const posterPath = obj.poster_path;
-              const fullPosterUrl = TMDB_IMAGE_BASE + posterPath;
-              $('.poster #poster').attr('src', fullPosterUrl)
-              $('#story').text(obj.overview)
+              $('.poster #poster').attr('src', fullPosterUrl)   // 영화포스터 
+              $('#story').text(obj.overview + obj.overview + obj.overview + obj.overview + obj.overview + obj.overview + obj.overview )               //영화 줄거리
+
+              // movie-header의 배경
+              $('.movie-header .bg-overlay').css('background', `url("${fullBackDropUrl}") center / 100% 100% no-repeat`)
+
+
             } else {
               $('#poster').html('<p>검색 결과가 없습니다.</p>');
               console.log('검색결과 없음');
@@ -130,7 +139,7 @@ $(function(){
     }
   });
 
-  /**더보기 버튼튼 */
+  /**더보기 버튼 */
   $('#toggleButton').click(function(){
     const story = $('#story');
     if(story.hasClass('collapsed')){
@@ -146,46 +155,98 @@ $(function(){
     window.location.href = `reserve.html?movieCd=${movieCd}`;
   });
   
+  /** 댓글입력 */
 
-  // /**네비게이션 바 */
-  // $(".dropdown").hover(
-  //   function() {
-  //       $(this).find(".submenu").stop(true, true).slideDown(300);
-  //   },
-  //   function() {
-  //       $(this).find(".submenu").stop(true, true).slideUp(300);
-  //   }
-  // );
-  /** 댓글입력력 */
-  // 별점 선택 처리
-document.querySelectorAll(".stars span").forEach(star => {
-  star.addEventListener("click", function () {
-    const rating = this.getAttribute("data-value");
-    document.getElementById("rating").value = rating * 2; // 1~5 → 2~10
-    document.querySelectorAll(".stars span").forEach(s => s.classList.remove("selected"));
-    for (let i = 0; i < rating; i++) {
-      document.querySelectorAll(".stars span")[i].classList.add("selected");
+  // 1. 평점, 좋았던점, 코멘트, 작성자자를 담을 변수
+  let score = 0;    // 평점
+  let goodJob = []  // 좋았던 점
+  let comment = ''  // 코멘트
+  let commentWriter = ''  //작성자
+
+  // 2. 별점 선택 처리
+  $(".stars span").on("click", function (e) {
+    const $this = $(this);
+    const offset = $this.offset();
+    const width = $this.outerWidth();
+    const offsetX = e.pageX - offset.left;
+    const index = $this.index();
+  
+    // 점수 계산
+    score = offsetX < width / 2 ? index + 0.5 : index + 1;
+    $("#rating").val(score); // 10점 만점으로 저장
+  
+    // 모든 별 초기화
+    $(".stars span").removeClass("selected half");
+  
+    // 정수 부분까지 selected
+    for (let i = 0; i < Math.floor(score); i++) {
+      $(".stars span").eq(i).addClass("selected");
+    }
+  
+    // 반쪽 별
+    if (score % 1 === 0.5) {
+      $(".stars span").eq(Math.floor(score)).addClass("selected half");
     }
   });
-});
 
-// 댓글 등록 예시 함수
-function submitComment() {
-  const rating = document.getElementById("rating").value;
-  const checked = [...document.querySelectorAll(".recommend-box input:checked")].map(cb => cb.value);
-  const text = document.querySelector("textarea").value;
+  // 3. 등록버튼 눌렀을 때
+  $('#addComment').click(function(){
+    //console.log(typeof $('#comment').val()) //string
+    if($('#comment').val() == ''){
+      alert('코멘트를 입력해주세요')
+    }else{
+      // 4. 작성자 저장
+      commentWriter = $('#commentWriter').val()
+      console.log(commentWriter)
 
-  console.log("별점:", rating);
-  console.log("좋았던 점:", checked);
-  console.log("댓글 내용:", text);
-  alert("댓글이 등록되었습니다 (콘솔 확인)");
-}
+      // 5. 좋았던 점 저장
+      $('.recommend-box input:checked').each(function(index, item){
+        goodJob.push($(this).val())
+      })
+      console.log(goodJob)
 
-// 댓글 평점 별로 표시 (6점 = 60% 골드)
-document.querySelectorAll(".star-display").forEach(el => {
-  const score = el.getAttribute("data-score");
-  const percent = score * 10;
-  el.style.setProperty("--score", percent + "%");
-});
+      // 6. 좋았던 점 문자열 생성
+      goodJobString = ''
+      $.each(goodJob, function(index, item){
+        goodJobString += `<em class="tag">${item}</em> &nbsp`
+      })
+      console.log(goodJobString)
+
+      // 7. 코멘트 저장
+      comment = $('#comment').val()
+
+      let lastComment = `<li>
+                            <div class="comment-box">
+                              <div class="user-prof">
+                                <img src="https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527_1280.png" alt="프로필">
+                                <p class="wrtiter">${commentWriter}</p>
+                              </div>
+                              <div class="story-cont">
+                                <div class="story-point">
+                                  <strong>평점 : ${score}</strong>
+                                  <div class="star-display" data-score="${score}"></div>
+                                </div><br>
+                                <div class="story-recommend">${goodJobString}</div>
+                                <div class="story-txt">${comment}</div><br>
+                                <div class="story-like">👍 추천수: 0</div>
+                              </div>
+                            </div>
+                          </li>
+                        `
+      //6. 템플릿에 맞게 출력
+      $('.comment-list').append(lastComment)
+      
+      //7. 좋았던 점, 작성자, score, 코멘트 초기화
+      goodJob = []                                      //좋았던 점 
+      $('#commentWriter').val('')                       // 작성자
+      $(".stars span").removeClass("selected half");    // 별점
+      $('#comment').val('')                             // 코멘트
+      $('.recommend-box input').prop('checked', false)  // 좋았던 점 체크박스
+  
+
+      
+    } //end if
+  }) // end ('#addComment').click()
+
 
 });

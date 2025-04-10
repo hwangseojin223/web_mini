@@ -16,20 +16,40 @@
     }
 
     .wrap {
-      width: 1100px;
+      width: 80%;
       margin: 0 auto;
       background-color: white;
       padding: 40px 30px;
     }
 
+    /*movie-header의 배경화면면*/
     .movie-header {
+      position: relative;
       display: flex;
       border-bottom: 2px solid #eee;
-      padding-bottom: 30px;
+      padding-bottom: 10px;
+      padding-top: 100px;
+      
     }
 
+    .movie-header .bg-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.2; /* 30% 투명도 */
+      z-index: 0; /* 배경으로 깔리도록 */
+      background: url('');
+    }
+    
+    .movie-header > *:not(.bg-overlay) {
+      position: relative;
+      z-index: 1;
+    }
+
+    /*------------------------------------------------------------*/
     .poster img {
-      width: 260px;
+      width: 300px;
       border-radius: 8px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
@@ -40,17 +60,23 @@
     }
 
     .info h1 {
-      font-size: 32px;
+      font-size: 80px;
       margin-bottom: 10px;
       color: #333;
     }
 
     .info .sub-info {
       font-size: 15px;
-      color: #777;
+      font-weight: bold;
+      color: #000000;
       margin-bottom: 20px;
-      
     }
+
+    .sub {
+      position: relative;
+      top: 100px;
+    }
+    
 
     .info .genres {
       margin-bottom: 25px;
@@ -105,34 +131,19 @@
   
     #toggleButton {
       margin-top: 5px;
-      background-color: #eee;
+      background-color: #9d8a8a;
       border: none;
       padding: 5px 10px;
       cursor: pointer;
     }
     
-    /*네비게이션 바바*/
-    .nav-links {
-      list-style : none;
-      display: flex;
-      justify-content: space-evenly;
-      border-bottom: black solid 1px;
-      border-top: black solid 1px;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      margin-top: 20px;
-  }
-  .nav-links li{
-      position:relative;
-  }
-  .nav-links li a {
-      font-weight: bold;
-      color : black;
-      text-decoration: none; 
+    /*네비게이션 바*/
+    .navbar {
+
   }
 
-  /*댓글 부분*/
-  .comment-form, .comment-box {
+  /*댓글 입력 부분*/
+  .comment-form {
     border: 1px solid #ccc;
     padding: 16px;
     margin-bottom: 20px;
@@ -151,7 +162,8 @@
     margin-right: 10px;
   }
   
-  .rating-box p, .recommend-box p {
+  .rating-box p,
+  .recommend-box p {
     margin: 10px 0 5px;
   }
   
@@ -162,10 +174,37 @@
     background: url('https://cdn-icons-png.flaticon.com/512/1828/1828884.png') no-repeat center/cover;
     opacity: 0.3;
     cursor: pointer;
+    position: relative;
   }
+  
   .stars span.selected {
     opacity: 1;
   }
+  
+  
+  /* 기본 별 배경 제거 */
+  .stars span.half {
+    background: none; 
+  
+  }
+  
+  .stars span.half::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 12px; /* 별의 왼쪽 절반 */
+    height: 100%;
+    background: url('https://cdn-icons-png.flaticon.com/512/1828/1828884.png') no-repeat left center;
+    background-size: cover;
+    opacity: 1;
+  }
+
+  .bye {
+    background: none; 
+  }
+  
+  
   
   .recommend-box label {
     margin-right: 10px;
@@ -182,11 +221,31 @@
   button {
     margin-top: 10px;
     padding: 8px 12px;
-    background-color: #0078ff;
+    background-color: #503396;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+  }
+
+  /* 댓글부분*/
+  .comment-box {
+    border: 1px solid #ccc;
+    padding: 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #fafafa;
+  }
+  
+  .user-prof {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .user-prof img {
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
   }
   
   .star-display {
@@ -206,51 +265,104 @@
     padding: 0;             /* 기본 왼쪽 들여쓰기 제거 */
     margin: 0;
   }
+
+
+  /*동적으로 생성된 댓글의 좋았던 점(em.tag)에 대한 스타일일*/
+  .tag {
+    display: inline-block;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 4px 8px;
+    margin-right: 4px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-style: normal; /* em의 기울임 제거 */
+  }
+
   
   </style>
 </head>
 <body>
-  <!-- 메뉴바 -->
-  <nav>
-    <div class="nav"></div>
-        <ul class="nav-links">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">영화</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">전체영화</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">예매</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">빠른예매</a></li>
-                <li><a class="dropdown-item" href="#">상영시간표</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">극장</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">전체극장</a></li>
-                <li><a class="dropdown-item" href="#">특별관</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">이벤트</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">진행중 이벤트</a></li>
-                <li><a class="dropdown-item" href="#">특별 이벤트</a></li>
-                <li><a class="dropdown-item" href="#">당첨자 발표</a></li>
-              </ul>
-            </li>
-            <li class="dropdown"><a href="#">스토어</a></li>
-            <li class="dropdown"><a href="#">혜택</a></li>
-            <li class="dropdown"><a href="#">마이페이지</a></li>
-        </ul>
+    <!-- 메뉴바 -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" href="#">🎬 Cinema</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px;">
+        
+        <!-- 영화 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            영화
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">전체영화</a></li>
+          </ul>
+        </li>
+
+        <!-- 예매 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            예매
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">빠른예매</a></li>
+            <li><a class="dropdown-item" href="#">상영시간표</a></li>
+          </ul>
+        </li>
+
+        <!-- 극장 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            극장
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">전체극장</a></li>
+            <li><a class="dropdown-item" href="#">특별관</a></li>
+          </ul>
+        </li>
+
+        <!-- 이벤트 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            이벤트
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">진행중 이벤트</a></li>
+            <li><a class="dropdown-item" href="#">특별 이벤트</a></li>
+            <li><a class="dropdown-item" href="#">당첨자 발표</a></li>
+          </ul>
+        </li>
+
+        <!-- 스토어 / 혜택 / 마이페이지 -->
+        <li class="nav-item">
+          <a class="nav-link fw-semibold" href="#">스토어</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-semibold" href="#">혜택</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-semibold" href="#">마이페이지</a>
+        </li>
+      </ul>
+
+      <!-- 검색창 -->
+      <form id="search-form" class="d-flex">
+        <input id="search-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
 </nav>
 
   <!-- 영화 포스터, 평점, 예매율, 누적관객수 -->
   <div class="wrap">
     <div class="movie-header">
+      <div class="bg-overlay"></div>
       <div class="info">
         <h1 id="title">영화제목</h1>
         <h3 id="enTitle">123</h2>
@@ -259,10 +371,19 @@
           개봉일: 2024.02.22&nbsp; | &nbsp;러닝타임: 134분&nbsp; | &nbsp;15세 이상 관람가
         </div> -->
         <div class="genres">
-          <!-- <span>장르1</span>
-          <span>장르2</span>
-          <span>장르3</span> -->
+          
         </div>
+
+        <!-- 세부정보 -->
+        <div class="sub">
+          <div class="sub-info">
+            감독: <span id="director"></span><br>
+            개봉일: <span id="prdDate"></span>&nbsp; | &nbsp;러닝타임:<span id="runnigTime"></span> &nbsp; | &nbsp; 연령등급:<span id="filmAge"></span><br>
+            출연: <span id="actors"></span>
+          </div>
+        </div> 
+
+        <!-- 예매버튼튼 -->
         <div class="buttons">
           <button id="reserveBtn">예매하기</button>
         </div>
@@ -271,6 +392,7 @@
         <img id="poster" src="" alt="영화 포스터">
       </div>
     </div>
+    
     <!-- 줄거리 -->
     <div class="section">
       <h2>줄거리</h2>
@@ -279,71 +401,47 @@
       </p>
       <button id="toggleButton">더보기</button>
     </div>
-
-    <!-- 세부정보보 -->
-    <br>
-    <h2>세부정보</h2>
-    <div class="section">
-      <div class="sub-info">
-        감독: <span id="director"></span><br>
-        개봉일: <span id="prdDate"></span>&nbsp; | &nbsp;러닝타임:<span id="runnigTime"></span> &nbsp; | &nbsp; 연령등급:<span id="filmAge"></span><br>
-        출연: <span id="actors"></span>
-      </div>
-    </div> 
-
+  
     <!-- 댓글창 -->
+    <br>
+    <h2>관람평</h2>
+    <br>
    <!-- 댓글 입력 폼 -->
-<div class="comment-form">
-  <div class="user-prof">
-    <img src="https://img.megabox.co.kr/static/pc/images/common/ico/ico-mega-profile.png" alt="MEGABOX">
-    <p class="user-id">MEGABOX</p>
-  </div>
-
-  <div class="rating-box">
-    <p>평점:</p>
-    <div class="stars">
-      <span data-value="1"></span>
-      <span data-value="2"></span>
-      <span data-value="3"></span>
-      <span data-value="4"></span>
-      <span data-value="5"></span>
-    </div>
-    <input type="hidden" id="rating" value="0">
-  </div>
-
-  <div class="recommend-box">
-    <p>좋았던 점:</p>
-    <label><input type="checkbox" value="스토리"> 스토리</label>
-    <label><input type="checkbox" value="연출"> 연출</label>
-    <label><input type="checkbox" value="영상미"> 영상미</label>
-    <label><input type="checkbox" value="배우"> 배우</label>
-    <label><input type="checkbox" value="OST"> OST</label>
-  </div>
-
-  <textarea placeholder="관람평을 입력해주세요" rows="4"></textarea>
-  <button type="button" onclick="submitComment()">등록</button>
-</div>
-
-<!-- 댓글 리스트 -->
-<ul class="comment-list">
-  <li>
-    <div class="comment-box">
+    <div class="comment-form">
       <div class="user-prof">
-        <img src="https://img.megabox.co.kr/SharedImg/asis/user/profile/2018/04/20/A9/E05BAC-B9EA-4FDF-84C9-A7F36A8C4CEA.large.jpg" alt="프로필">
-        <p class="user-id">qu**core</p>
+        <img src="https://img.megabox.co.kr/static/pc/images/common/ico/ico-mega-profile.png" alt="MEGABOX">
+        <p>작성자 : <input type="text" id="commentWriter"></p>
       </div>
-      <div class="story-cont">
-        <div class="story-point">
-          <strong>평점:</strong>
-          <div class="star-display" data-score="6"></div>
+
+      <div class="rating-box">
+        <p>평점:</p>
+        <div class="stars">
+          <span data-value="1"></span>
+          <span data-value="2"></span>
+          <span data-value="3"></span>
+          <span data-value="4"></span>
+          <span data-value="5"></span>
         </div>
-        <div class="story-recommend"><em>연출</em><em>배우</em></div>
-        <div class="story-txt">연기 좋고 클리셰를 부순 건 좋으나 평탄함. TV드라마로 더 좋았을 듯.</div>
-        <div class="story-like">👍 추천수: 0</div>
+        <input type="hidden" id="rating" value="0">
       </div>
+
+      <div class="recommend-box">
+        <p>좋았던 점:</p>
+        <label><input type="checkbox" value="스토리"> 스토리</label>
+        <label><input type="checkbox" value="연출"> 연출</label>
+        <label><input type="checkbox" value="영상미"> 영상미</label>
+        <label><input type="checkbox" value="배우"> 배우</label>
+        <label><input type="checkbox" value="OST"> OST</label>
+      </div>
+
+      <textarea placeholder="관람평을 입력해주세요" rows="4" id="comment"></textarea>
+      <button type="button" id="addComment">등록</button>
     </div>
-  </li>
-</ul>
+
+    <!-- 댓글 리스트 -->
+    <ul class="comment-list">
+      
+    </ul>
 
 
   
