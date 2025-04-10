@@ -186,12 +186,16 @@ document.getElementById('next-btn').addEventListener('click', () => {
     return;
   }
 
+  // 인원 수 계산
+  const totalPeople = counts.adult + counts.teen + counts.discount;
+
+  // 좌석 정보 변환 (예: 2-5 -> C6)
   const seatList = [...selectedSeats].map(id => {
     const [r, c] = id.split('-');
     return String.fromCharCode(65 + parseInt(r)) + (parseInt(c) + 1);
   }).join(',');
 
-  // ✅ 가격 계산
+  // 총 가격 계산
   let price = 0;
   let temp = {
     adult: counts.adult,
@@ -212,10 +216,23 @@ document.getElementById('next-btn').addEventListener('click', () => {
     }
   }
 
-  // ✅ URL에 price도 함께 추가
-  const url = `payment.html?movie=${movie}&theater=${theater}&date=${date}&time=${time}&seats=${seatList}&people=${counts.adult + counts.teen + counts.discount}&price=${price}`;
-  window.location.href = url;
+  // 쿼리스트링으로 정보 넘기기
+  const query = new URLSearchParams({
+    movie,
+    theater,
+    date,
+    time,
+    seats: seatList,
+    adult: counts.adult,
+    teen: counts.teen,
+    discount: counts.discount,
+    price
+  }).toString();
+
+  // payment.html로 이동
+  window.location.href = `payment.html?${query}`;
 });
+
 
 
 // 🎨 TMDB 포스터 로딩

@@ -4,24 +4,78 @@
   <meta charset="UTF-8">
   <title>결제수단 선택</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="payment.css">
 </head>
 <body>
+  <h1 id="movie-title"></h1>
+<p id="movie-info"></p>
+<p id="seat-list"></p>
+<p id="people-info"></p>
+<p id="final-price" style="font-weight: bold; font-size: 20px;"></p>
+
 
   <div class="container-box">
     <!-- 🎬 예매 정보 -->
     <div class="movie-info">
-      <img class="movie-poster" src="${posterUrl}" width="150" style="border-radius:10px; margin-bottom:10px;">
-      <div class="movie-details">
-        <h4>듄: 파트2</h4>
-        <p><strong>예매 영화:</strong> 듄: 파트2 (Dune: Part Two)</p>
-        <p><strong>상영 일시:</strong> 2025.04.15 (화) 19:30</p>
-        <p><strong>상영관:</strong> 메가박스 코엑스 4관</p>
-        <p><strong>관람 인원:</strong> 성인 2명, 청소년 1명</p>
-        <p><strong>총 결제금액:</strong> 33,000원</p>
-      </div>
+      <img class="movie-poster" src="" alt="영화 포스터" width="150" style="border-radius:10px; margin-bottom:10px;">
+      <div class="movie-details"></div>
     </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const movie = params.get('movie');
+      const theater = params.get('theater');
+      const date = params.get('date');
+      const time = params.get('time');
+      const seats = params.get('seats');
+      const adult = parseInt(params.get('adult'), 10);
+      const teen = parseInt(params.get('teen'), 10);
+      const discount = parseInt(params.get('discount'), 10);
+      const price = parseInt(params.get('price'), 10);
+    
+      const formattedDate = date.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3');
+      const weekDay = new Date(`${date.substr(0, 4)}-${date.substr(4, 2)}-${date.substr(6, 2)}`).toLocaleDateString('ko-KR', { weekday: 'short' });
+      const formattedTime = time.replace(/(\d{2})(\d{2})/, '$1:$2');
+      const formattedPrice = price.toLocaleString('ko-KR');
+    
+      let peopleStr = [];
+      if (adult > 0) peopleStr.push(`성인 ${adult}명`);
+      if (teen > 0) peopleStr.push(`청소년 ${teen}명`);
+      if (discount > 0) peopleStr.push(`우대 ${discount}명`);
+    
+      document.querySelector('.movie-details').innerHTML = `
+        <h4>${movie}</h4>
+        <p><strong>예매 영화:</strong> ${movie}</p>
+        <p><strong>상영 일시:</strong> ${formattedDate} (${weekDay}) ${formattedTime}</p>
+        <p><strong>상영관:</strong> ${theater}</p>
+        <p><strong>선택 좌석:</strong> ${seats}</p>
+        <p><strong>관람 인원:</strong> ${peopleStr.join(', ')}</p>
+        <p><strong>총 결제금액:</strong> ${formattedPrice}원</p>
+      `;
+    
+      // 🎬 TMDB에서 영화 포스터 가져오기
+      const tmdbApiKey = '234ef78df71e08e515ca2d691678e0f1'; // 네 TMDB API 키로 바꿔줘야 해!
+      const tmdbSearchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${encodeURIComponent(movie)}&language=ko-KR`;
+    
+      fetch(tmdbSearchUrl)
+        .then(res => res.json())
+        .then(data => {
+          if (data.results && data.results.length > 0) {
+            const posterPath = data.results[0].poster_path;
+            const posterUrl = `https://image.tmdb.org/t/p/w500${posterPath}`;
+            document.querySelector('.movie-poster').src = posterUrl;
+            document.querySelector('.movie-poster').alt = movie + ' 포스터';
+          } else {
+            console.warn('포스터를 찾을 수 없습니다.');
+          }
+        })
+        .catch(err => console.error('포스터 가져오기 실패:', err));
+    </script>
+    
+      
 
     <!-- 💳 결제수단 선택 -->
     <h3 class="mb-4">결제수단 선택</h3>
