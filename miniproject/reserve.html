@@ -8,18 +8,93 @@
   <link rel="stylesheet" href="reservestyle.css">
 </head>
 <body>
+  <!-- 메뉴바 -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-primary" href="index.html">🎬 Cinema</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px;">
+          <!-- 영화 -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              영화
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">전체영화</a></li>
+            </ul>
+          </li>
+
+          <!-- 예매 -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              예매
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="reserve.html">빠른예매</a></li>
+              <li><a class="dropdown-item" href="#">상영시간표</a></li>
+            </ul>
+          </li>
+
+          <!-- 극장 -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              극장
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">전체극장</a></li>
+              <li><a class="dropdown-item" href="#">특별관</a></li>
+            </ul>
+          </li>
+
+          <!-- 이벤트 -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              이벤트
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">진행중 이벤트</a></li>
+              <li><a class="dropdown-item" href="#">특별 이벤트</a></li>
+              <li><a class="dropdown-item" href="#">당첨자 발표</a></li>
+            </ul>
+          </li>
+
+          <!-- 기타 -->
+          <li class="nav-item"><a class="nav-link fw-semibold" href="#">스토어</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="#">혜택</a></li>
+          <li class="nav-item"><a class="nav-link fw-semibold" href="#">마이페이지</a></li>
+        </ul>
+
+        <!-- 검색창 -->
+        <form id="search-form" class="d-flex">
+          <input id="search-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+
+
+
   <div class="poster-background">
     <div class="overlay"></div>
   </div>
-    
+
   <h2>빠른예매</h2>
   <div class="d-flex gap-3">
     <div>
       <div class="section-title">날짜</div>
-      <div class="date-selector d-flex">
-        <button class="btn btn-outline-secondary btn-sm">4/9 - 오늘</button>
-        <button class="btn btn-outline-secondary btn-sm">4/10 - 내일</button>
-        <button class="btn btn-outline-secondary btn-sm">4/11 - 금</button>
+      <div class="date-selector-wrapper">
+        <div class="date-header">
+          <button class="date-nav-btn" id="prev-week"><</button>
+          <span id="current-month-year">2025.04</span>
+          <button class="date-nav-btn" id="next-week">></button>
+        </div>
+        <div class="date-selector" id="date-selector"></div>
       </div>
     </div>
   </div>
@@ -53,6 +128,7 @@
 
     <div class="flex-fill">
       <div class="section-title">시간</div>
+      
       <div id="time-section" class="border rounded p-4 text-center text-muted">
         영화와 극장을 선택하시면<br>
         상영시간표를 비교하여 볼 수 있습니다.
@@ -64,5 +140,25 @@
   </div>
 
   <script src="reservescript.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let lastScrollTop = 0;
+    const navbar = document.querySelector('.navbar');
+  
+    window.addEventListener('scroll', function () {
+      const currentScroll = window.scrollY || document.documentElement.scrollTop;
+  
+      if (currentScroll > lastScrollTop) {
+        // 스크롤 내릴 때 숨김
+        navbar.style.top = "-80px";
+      } else {
+        // 스크롤 올릴 때 보임
+        navbar.style.top = "0";
+      }
+  
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    });
+  </script>
+  
 </body>
 </html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>메가박스</title>
+    <title>Cinema.com</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -14,7 +14,7 @@
   <!-- 메뉴바 -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container">
-    <a class="navbar-brand fw-bold text-primary" href="#">🎬 Cinema</a>
+    <a class="navbar-brand fw-bold " href="#" style="color: #5A1E94;">🎬 Cinema</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -99,13 +99,15 @@
     </div>
     <!-- 공지사항 -->
     <div class="notice">
-        <div id="noticelogo">공지사항</div>
-        <ul class="noticeList">
+        <div id="noticelogo">📢 공지사항</div>
+        <div class="noticeList">
+          <ul class="noticeWrap">
             <li><a href="#">공지사항 1</a></li>
             <li><a href="#">공지사항 2</a></li>
             <li><a href="#">공지사항 3</a></li>
             <li><a href="#">공지사항 4</a></li>
         </ul>
+        </div>
     </div>
     <!-- 아래메뉴바 -->
     <footer>
@@ -119,21 +121,6 @@
     </footer>
 
     <script>
-      
-        // 공지사항
-        $(document).ready(function () {
-            
-            function slideNotice() {
-              const first = $('.noticeList li:first');
-              first.slideUp(500, function () {
-                $(this).appendTo('.noticeList').show(); // 마지막으로 보내고 다시 보이게
-              });
-            }
-        
-            setInterval(slideNotice, 10000); // 10초에 한 번 실행
-          });
-
-
         // 영화출력
         let latestMovies = [];
         let currentPage = 0;
@@ -195,9 +182,9 @@
                             <a href="detail.html?movieCd=${encodeURIComponent(movie.code)}" class="btn btn-light btn-sm detail-btn">상세보기</a>
                         </div>
                     </div>
-                     <div class="movie-info" style="margin-top: 10px;">
-                        <div style="font-weight:bold;">${movie.title}
-                        <a href="reserve.html?movieCd=${encodeURIComponent(movie.code)}" class="btn btn-outline-dark">예매하기</a>
+                     <div class="movie-info" >
+                        <div class="movie-info-title" >${movie.title}
+                        <a href="reserve.html?movieCd=${encodeURIComponent(movie.code)}" class="reserve-btn">예매하기</a>
                     </div>
                     </div>
                 </div>`;

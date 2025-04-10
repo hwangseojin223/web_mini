@@ -1,17 +1,30 @@
 .navbar {
-    margin-top: 20px;
-    margin-bottom:4px;
+    margin-bottom: 4px;
+    border-radius: 16px;
+    /* background: linear-gradient(135deg, #6D28D9, #9333EA); */
+    padding: 14px 24px;
+    color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
+
 #latest-movie-wrapper{
     margin-top:50px;
 }
-#search-form {
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 20px;
-}
+
 #search-form > button {
     margin-left: 15px;
+    background: linear-gradient(135deg, #6D28D9, #9333EA);
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 25px;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease-in-out;
+}
+#search-form > button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #7C3AED, #A855F7);
 }
 #latest-movie-list{
     display:flex;
@@ -22,65 +35,222 @@
     margin-top: 15px;
     margin-bottom: 20px;
 }
+#moviebtn button {
+    background-color: #5A1E94;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    margin: 0 8px;
+    transition: all 0.3s ease;
+}
+
+#moviebtn button:hover {
+    background-color: #5A1E94;
+    transform: scale(1.05);
+    color: white;
+}
+#moviebtn button, .reserve-btn {
+    background: linear-gradient(135deg, #6D28D9, #9333EA);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 9999px; /* pill 형태 */
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+#moviebtn button:hover, .reserve-btn:hover {
+    transform: scale(1.08);
+    background: linear-gradient(135deg, #7C3AED, #A855F7);
+}
 
 .notice {
-    border-top: solid 1px;
-    border-bottom: solid 1px;
-    align-items: center;
     display: flex;
-    margin-bottom: 130px;
-}
-#noticelogo{
-    padding-left: 120px;
-    padding-right: 110px;
-    padding-top :10px;
-    padding-bottom: 10px;
-    border-right: solid 1px;
-}
-.noticeList {
-    height: 30px;        /* li 하나 높이 */
+    align-items: center;
+    border-radius: 20px;
+    padding: 16px 0;
+    background: linear-gradient(135deg, #ede9fe, #f3e8ff);
+    color: #4b5563;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     overflow: hidden;
-    position: relative;
-    list-style: none;
-    padding-left: 10px;
-    margin: 0;
 }
-  
-.noticeList li {
-    height: 30px;
-    line-height: 30px;
-    padding-left: 10px;
+#noticelogo {
+    padding: 20px 30px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #4f46e5;
+    background: #e0e7ff;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-right: 1px solid #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
 }
-.noticeList li a {
-    text-decoration: none;
-    color : black;
+
+.noticeList {
+    flex: 1;
+    overflow: hidden;
+    padding: 0 20px;
 }
 
+.noticeWrap {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    animation: slideUp 10s ease-in-out infinite;
+}
+
+.noticeWrap li {
+    height: 36px;
+    line-height: 36px;
+    font-size: 15px;
+    padding-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.3s ease;
+}
+
+/* 링크 스타일 */
+.noticeWrap li a {
+    text-decoration: none;
+    color: #4b5563;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.noticeWrap li a:hover {
+    color: #6366F1;
+    font-weight: 600;
+}
+
+/* 슬라이드 애니메이션 */
+@keyframes slideUp {
+    0%, 15%   { transform: translateY(0); }
+    20%, 35%  { transform: translateY(-36px); }
+    40%, 55%  { transform: translateY(-72px); }
+    60%, 75%  { transform: translateY(-108px); }
+    80%, 100% { transform: translateY(0); }
+}
+.movie-info {
+    margin-top: 10px;
+    font-family: 'Pretendard', sans-serif;
+}
+
+.movie-info-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #222;
+    margin-bottom: 8px;
+}
+.reserve-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    background: linear-gradient(135deg, #7C3AED, #9333EA);
+    text-decoration: none !important;
+    box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease;
+}
+.reserve-btn,
+.reserve-btn:hover,
+.reserve-btn:focus,
+.reserve-btn:visited,
+.movie-info-title a.reserve-btn {
+    text-decoration: none !important;
+}
+.reserve-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    background: linear-gradient(135deg, #8B5CF6, #A78BFA);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+}
+footer {
+    background: #f3f4f6;
+    border-top: 1px solid #e5e7eb;
+    padding: 40px 0;
+    margin-top: 120px;
+    font-size: 14px;
+    color: #6b7280;
+    text-align: center;
+    
+}
 .footerList{
     list-style: none;
     display: flex;
     justify-content: space-evenly;
-
+    gap: 40px; /* 항목 간 간격 */
+    padding: 0;
+    margin: 0;
+    font-family: 'Pretendard', sans-serif;
+    font-size: 14px;
+    color: #555;
+}
+.footerList li {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
 }
 .footerList li:hover{
     text-decoration: underline;
+    color: #7C3AED;
 }
 .movie-poster:hover {
     filter: brightness(0.7);
 }
 
+body, button, input, a {
+    font-family: 'Pretendard', sans-serif;
+    color: var(--text-dark);
+}
 
+
+#latest-movie-wrapper {
+    background-color: #ffffff;
+    padding: 50px 0;
+    border-radius: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.notice {
+    /* background-color: #2a2a3b; */
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+body {
+    background: linear-gradient(to right, #f3e7e9, #e3eeff);
+    font-family: 'Pretendard', sans-serif;
+    color: var(--text-dark);
+}
+#noticelogo {
+    /* background-color: #3b3b4d; */
+    color: #fefefe;
+}
 .movie-card {
     position: relative;
     display: inline-block;
     margin:10px;
     text-align: center;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  
+  .movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
 .poster-container {
     position: relative;
     display: inline-block;
+    
 }
 
 .movie-poster {
@@ -106,6 +276,10 @@
     border-radius: 10px;
     pointer-events: none;
     font-size: 14px;
+    backdrop-filter: blur(5px);
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
 }
   
 .poster-container:hover .overlay {

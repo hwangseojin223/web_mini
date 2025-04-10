@@ -1,169 +1,247 @@
 body {
-    background-color: #f7f7f8;
-    font-family: 'Noto Sans KR', sans-serif;
-    padding: 20px;
-    color: #333;
-    padding-top: 400px;
-  }
-  
-  .section-title {
-    font-size: 22px;
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: #5A1E94;
-    border-left: 5px solid #5A1E94;
-    padding-left: 10px;
-  }
-  
-  .date-selector button {
-    margin: 5px 5px 10px 0;
-    padding: 8px 14px;
-    border: 1px solid #ccc;
-    background-color: white;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .date-selector .selected {
-    background-color: #5A1E94;
-    color: white;
-    border: none;
-  }
-  
-  .movie-item {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-    cursor: pointer;
-    background-color: white;
-    border-radius: 10px;
-    margin-bottom: 8px;
-    transition: 0.2s;
-  }
-  
-  .movie-item:hover {
-    background-color: #f0e6fa;
-  }
-  
-  .selected {
-    background-color: #e0d3f5;
-    font-weight: bold;
-  }
-  
-  .region-item, .theater-item {
-    cursor: pointer;
-    padding: 6px 10px;
-    background-color: white;
-    border-radius: 8px;
-    margin-bottom: 5px;
-    transition: 0.3s;
-  }
-  
-  .region-item:hover, .theater-item:hover {
-    background-color: #eee;
-  }
-  
-  .region-item.selected, .theater-item.selected {
-    background-color: #5A1E94;
-    color: white;
-    font-weight: bold;
-  }
-  
-  .theater-list-wrapper {
-    display: flex;
-  }
-  
-  .region-list {
-    min-width: 100px;
-    margin-right: 10px;
-  }
-  
-  .theater-list {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .time-hour-selector {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 15px;
-  }
-  
-  .hour-btn {
-    cursor: pointer;
-    background-color: #f2f2f2;
-    border: none;
-    border-radius: 20px;
-    padding: 6px 14px;
-    transition: 0.3s;
-  }
-  
-  .hour-btn:hover {
-    background-color: #ddd;
-  }
-  
-  .hour-btn.active {
-    background-color: #5A1E94;
-    color: white;
-    font-weight: bold;
-    border: 1px solid #5A1E94;
-  }
-  
-  
-  .time-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-height: 300px;
-    overflow-y: auto;
-  }
-  
-  .time-slot {
-    background-color: white;
-    padding: 12px;
-    border-radius: 12px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    cursor: pointer;
-    transition: 0.2s;
-  }
-  
-  .time-slot:hover {
-    background-color: #f2edf9;
-  }
-  
-  .time-slot.selected {
-    background-color: #5A1E94;
-    color: white;
-    font-weight: bold;
-  }
-  
-  #selection-summary {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #eee;
-    border-radius: 8px;
-    font-size: 16px;
-  }
-  
-  .poster-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 400px;
-    background-size: cover;
-    background-position: center 30%;
-    z-index: -1;
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
-  }
-  
-  
-  .overlay {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 80%);
-  }
-  
+  background-color: #f7f7f8;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding: 20px;
+  color: #333;
+  padding-top: 400px;
+}
+
+.section-title {
+  font-size: 22px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #5A1E94;
+  border-left: 5px solid #5A1E94;
+  padding-left: 10px;
+}
+
+
+.movie-item {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  transition: 0.2s;
+}
+
+.movie-item:hover {
+  background-color: #f0e6fa;
+}
+
+.selected {
+  background-color: #e0d3f5;
+  font-weight: bold;
+}
+
+.region-item, .theater-item {
+  cursor: pointer;
+  padding: 6px 10px;
+  background-color: white;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  transition: 0.3s;
+}
+
+.region-item:hover, .theater-item:hover {
+  background-color: #eee;
+}
+
+.region-item.selected, .theater-item.selected {
+  background-color: #5A1E94;
+  color: white;
+  font-weight: bold;
+}
+
+.theater-list-wrapper {
+  display: flex;
+}
+
+.region-list {
+  min-width: 100px;
+  margin-right: 10px;
+}
+
+.theater-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.time-hour-selector {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.hour-btn {
+  cursor: pointer;
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  transition: 0.3s;
+}
+
+.hour-btn:hover {
+  background-color: #ddd;
+}
+
+.hour-btn.active {
+  background-color: #5A1E94;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #5A1E94;
+}
+
+
+.time-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.time-slot {
+  background-color: white;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.time-slot:hover {
+  background-color: #f2edf9;
+}
+
+.time-slot.selected {
+  background-color: #5A1E94;
+  color: white;
+  font-weight: bold;
+}
+
+#selection-summary {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #eee;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.poster-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 400px;
+  background-size: cover;
+  background-position: center 30%;
+  z-index: -1;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+}
+
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 80%);
+}
+
+
+.date-selector-wrapper {
+  background-color: white;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.date-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#current-month-year {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.date-nav-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #5A1E94;
+}
+
+.date-nav-btn:hover {
+  color: #3a1261;
+}
+
+#date-selector {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.date-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border: none;
+  background-color: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.date-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.date-btn.selected {
+  background-color: #5A1E94;
+  color: white;
+}
+
+.date-btn .day-of-week {
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+
+.date-btn .day {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.date-btn.sunday .day-of-week,
+.date-btn.sunday .day {
+  color: #d9534f; /* 일요일: 빨간색 */
+}
+
+.date-btn.saturday .day-of-week,
+.date-btn.saturday .day {
+  color: #007bff; /* 토요일: 파란색 */
+}
+
+.date-btn.selected .day-of-week,
+.date-btn.selected .day {
+  color: white;
+}
+
+.navbar {
+  margin-top: 0px;
+  margin-bottom: 4px;
+  transition: top 0.3s;
+}
