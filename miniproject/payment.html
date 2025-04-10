@@ -48,7 +48,6 @@
     
       document.querySelector('.movie-details').innerHTML = `
         <h4>${movie}</h4>
-        <p><strong>예매 영화:</strong> ${movie}</p>
         <p><strong>상영 일시:</strong> ${formattedDate} (${weekDay}) ${formattedTime}</p>
         <p><strong>상영관:</strong> ${theater}</p>
         <p><strong>선택 좌석:</strong> ${seats}</p>
@@ -57,7 +56,7 @@
       `;
     
       // 🎬 TMDB에서 영화 포스터 가져오기
-      const tmdbApiKey = '234ef78df71e08e515ca2d691678e0f1'; // 네 TMDB API 키로 바꿔줘야 해!
+      const tmdbApiKey = '234ef78df71e08e515ca2d691678e0f1'; 
       const tmdbSearchUrl = `https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${encodeURIComponent(movie)}&language=ko-KR`;
     
       fetch(tmdbSearchUrl)
@@ -81,7 +80,7 @@
     <h3 class="mb-4">결제수단 선택</h3>
 
     <div class="payment-box">
-      <p class="fw-bold">JoongAng PAY</p>
+      <p class="fw-bold">KOSA PAY</p>
       <div class="card-register">
         <span class="fw-bold">+</span> 자주 사용하는 카드 등록하고<br>
         더욱 빠르게 결제하세요!
@@ -131,3 +130,4 @@
   <script src="payment.js"></script>
 </body>
 </html>
+

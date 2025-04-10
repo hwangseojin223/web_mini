@@ -1,24 +1,6 @@
 const checkboxes = document.querySelectorAll('.agreement-check');
 const payBtn = document.getElementById('payBtn');
-const params = new URLSearchParams(window.location.search);
 const radioButtons = document.querySelectorAll('input[name="pay"]');
-const movie = params.get('movie');
-const theater = params.get('theater');
-const date = params.get('date');
-const time = params.get('time');
-const seats = params.get('seats');
-const adult = parseInt(params.get('adult'));
-const teen = parseInt(params.get('teen'));
-const discount = parseInt(params.get('discount'));
-const price = parseInt(params.get('price'));
-
-// 페이지에 정보 표시 (HTML 요소는 적절히 설정해줘야 함)
-document.getElementById('movie-title').textContent = movie;
-document.getElementById('movie-info').textContent = `${theater} | ${date.slice(4, 6)}월 ${date.slice(6)}일 | ${time}`;
-document.getElementById('seat-list').textContent = seats;
-document.getElementById('people-info').textContent = 
-  `성인 ${adult}명, 청소년 ${teen}명, 우대 ${discount}명`;
-document.getElementById('final-price').textContent = `${price.toLocaleString()}원`;
 
 function updatePayButtonState() {
   const allChecked = [...checkboxes].every(cb => cb.checked);

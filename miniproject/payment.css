@@ -74,17 +74,12 @@ body {
     margin-left: 4px;
   }
 
-  .simple-pay-options,
-  .promotion {
-    display: none;
-  }
-
-
   .simple-pay-options label {
     margin-right: 15px;
     font-weight: 500;
     cursor: pointer;
   }
+
   
   .promotion {
     background: #e8f9fd;
