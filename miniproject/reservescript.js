@@ -128,7 +128,8 @@ document.querySelectorAll('.date-selector button').forEach(button => {
 
 document.getElementById('book-now').addEventListener('click', () => {
   if (selectedMovie && selectedTheater && selectedDate && selectedTime) {
-    const query = `movie=${encodeURIComponent(selectedMovie)}&theater=${encodeURIComponent(selectedTheater)}&date=${selectedDate}&time=${selectedTime}`;
+    const selectedSlot = allTimes.find(t => t.start === selectedTime);
+    const query = `movie=${encodeURIComponent(selectedMovie)}&theater=${encodeURIComponent(selectedTheater)}&date=${selectedDate}&time=${selectedTime}&remaining=${selectedSlot.remaining}&total=${selectedSlot.total}`;
     window.location.href = `booking.html?${query}`;
   }
 });
