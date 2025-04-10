@@ -142,6 +142,7 @@ $(function(){
     }
   })
 
+<<<<<<< HEAD
   $('#reserveBtn').click(function() {
     window.location.href = `reserve.html?movieCd=${movieCd}`;
   });
@@ -156,4 +157,38 @@ $(function(){
   //       $(this).find(".submenu").stop(true, true).slideUp(300);
   //   }
   // );
+=======
+  /** 댓글입력력 */
+  // 별점 선택 처리
+document.querySelectorAll(".stars span").forEach(star => {
+  star.addEventListener("click", function () {
+    const rating = this.getAttribute("data-value");
+    document.getElementById("rating").value = rating * 2; // 1~5 → 2~10
+    document.querySelectorAll(".stars span").forEach(s => s.classList.remove("selected"));
+    for (let i = 0; i < rating; i++) {
+      document.querySelectorAll(".stars span")[i].classList.add("selected");
+    }
+  });
+});
+
+// 댓글 등록 예시 함수
+function submitComment() {
+  const rating = document.getElementById("rating").value;
+  const checked = [...document.querySelectorAll(".recommend-box input:checked")].map(cb => cb.value);
+  const text = document.querySelector("textarea").value;
+
+  console.log("별점:", rating);
+  console.log("좋았던 점:", checked);
+  console.log("댓글 내용:", text);
+  alert("댓글이 등록되었습니다 (콘솔 확인)");
+}
+
+// 댓글 평점 별로 표시 (6점 = 60% 골드)
+document.querySelectorAll(".star-display").forEach(el => {
+  const score = el.getAttribute("data-score");
+  const percent = score * 10;
+  el.style.setProperty("--score", percent + "%");
+});
+
+>>>>>>> 05339739ab539c0f8296743d0a30e5ddf77382ab
 });
