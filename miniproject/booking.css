@@ -202,7 +202,7 @@ body {
 }
   
   body {
-    padding-top: 80px; /* 네비게이션 바 높이만큼 간격 */
+    padding-top: 150px; /* 네비게이션 바 높이만큼 간격 */
   }
   
   #seat-container {

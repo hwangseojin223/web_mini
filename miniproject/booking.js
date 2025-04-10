@@ -191,9 +191,32 @@ document.getElementById('next-btn').addEventListener('click', () => {
     return String.fromCharCode(65 + parseInt(r)) + (parseInt(c) + 1);
   }).join(',');
 
-  const url = `payment.html?movie=${movie}&theater=${theater}&date=${date}&time=${time}&seats=${seatList}&people=${selectedCount}`;
+  // ✅ 가격 계산
+  let price = 0;
+  let temp = {
+    adult: counts.adult,
+    teen: counts.teen,
+    discount: counts.discount,
+  };
+
+  for (let i = 0; i < selectedSeats.size; i++) {
+    if (temp.adult > 0) {
+      price += prices.adult;
+      temp.adult--;
+    } else if (temp.teen > 0) {
+      price += prices.teen;
+      temp.teen--;
+    } else if (temp.discount > 0) {
+      price += prices.discount;
+      temp.discount--;
+    }
+  }
+
+  // ✅ URL에 price도 함께 추가
+  const url = `payment.html?movie=${movie}&theater=${theater}&date=${date}&time=${time}&seats=${seatList}&people=${counts.adult + counts.teen + counts.discount}&price=${price}`;
   window.location.href = url;
 });
+
 
 // 🎨 TMDB 포스터 로딩
 function fetchPoster(title, callback) {

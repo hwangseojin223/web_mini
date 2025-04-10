@@ -1,0 +1,122 @@
+body {
+    font-family: 'Pretendard', sans-serif;
+    background: #f9f9f9;
+    padding: 40px 20px;
+  }
+  
+  .container-box {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  }
+  
+  .movie-info {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .movie-info img {
+    width: 160px;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+  
+  .movie-details {
+    flex-grow: 1;
+  }
+  
+  .movie-details h4 {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .movie-details p {
+    margin: 4px 0;
+    color: #555;
+  }
+  
+  .payment-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    background: #fdfdfd;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    text-align: center;
+  }
+  
+  .card-register {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  .payment-buttons .btn {
+    width: 48%;
+    margin-bottom: 10px;
+  }
+  
+  .btn.selected {
+    border: 2px solid #00c3e1;
+    color: #00c3e1;
+    font-weight: bold;
+  }
+  
+  .tag {
+    background: #00c3e1;
+    color: white;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-left: 4px;
+  }
+
+  .simple-pay-options,
+  .promotion {
+    display: none;
+  }
+
+
+  .simple-pay-options label {
+    margin-right: 15px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .promotion {
+    background: #e8f9fd;
+    border-left: 4px solid #00b7e1;
+    padding: 15px;
+    margin-top: 15px;
+  }
+  
+  .agreement label {
+    display: block;
+    font-size: 14px;
+    margin: 8px 0;
+  }
+  
+  .cancel-policy {
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 12px;
+    font-size: 16px;
+  }
+  
+  .submit-btn:disabled {
+    background-color: #ccc;
+    border: none;
+  }
+  
