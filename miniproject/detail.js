@@ -108,13 +108,16 @@ $(function(){
               }
 
               const posterPath = obj.poster_path;
+              const backDropPath = obj.backdrop_path
               const fullPosterUrl = TMDB_IMAGE_BASE + posterPath;
+              const fullBackDropUrl = TMDB_IMAGE_BASE + backDropPath;
+              
 
               $('.poster #poster').attr('src', fullPosterUrl)   // 영화포스터 
               $('#story').text(obj.overview + obj.overview + obj.overview + obj.overview + obj.overview + obj.overview + obj.overview )               //영화 줄거리
 
               // movie-header의 배경
-              $('.movie-header .bg-overlay').css('background', `url("${fullPosterUrl}") center / 100% 150% no-repeat`)
+              $('.movie-header .bg-overlay').css('background', `url("${fullBackDropUrl}") center / 100% 100% no-repeat`)
 
 
             } else {
