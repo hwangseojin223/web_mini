@@ -239,6 +239,10 @@ fetch(`https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDail
   
   function generateDateButtons() {
     const container = document.getElementById('date-selector');
+    if (!container) {
+      console.error('date-selector 요소를 찾을 수 없습니다.');
+      return;
+    }
     container.innerHTML = '';
   
     const today = new Date();
@@ -251,18 +255,18 @@ fetch(`https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDail
       day: '2-digit',
     });
   
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i++) { // 7일 표시
       const date = new Date(currentWeekStart);
       date.setDate(currentWeekStart.getDate() + i);
   
-      // 날짜 숫자만 추출 (단위 "일" 제거)
-      const day = date.getDate().toString().padStart(2, '0'); // 숫자만 사용
+      // 날짜 숫자만 추출
+      const day = date.getDate().toString().padStart(2, '0');
       const weekday = weekdays[date.getDay()]; // 요일을 직접 계산
   
       const btn = document.createElement('button');
       btn.className = 'date-btn';
   
-      // 요일과 날짜를 세로로 배치 (날짜에서 "일" 제거)
+      // 요일과 날짜를 세로로 배치
       btn.innerHTML = `
         <span class="day-of-week">${weekday}</span>
         <span class="day">${day}</span>
@@ -306,31 +310,61 @@ fetch(`https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDail
   }
   
 // 좌우 화살표 이벤트 추가
-document.getElementById('prev-week').addEventListener('click', () => {
-  const newWeekStart = new Date(currentWeekStart);
-  newWeekStart.setDate(currentWeekStart.getDate() - 7);
-  
-  // 오늘 날짜보다 이전으로 가지 않도록 제한
+document.addEventListener('DOMContentLoaded', () => {
+  const prevWeekBtn = document.getElementById('prev-week');
+  const nextWeekBtn = document.getElementById('next-week');
+
+  if (!prevWeekBtn || !nextWeekBtn) {
+    console.error('prev-week 또는 next-week 버튼을 찾을 수 없습니다.');
+    return;
+  }
+
+  prevWeekBtn.addEventListener('click', () => {
+    const newWeekStart = new Date(currentWeekStart);
+    newWeekStart.setDate(currentWeekStart.getDate() - 7);
+
+    // 오늘 날짜보다 이전으로 가지 않도록 제한
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // newWeekStart의 마지막 날짜(일주일치 중 마지막 날짜)가 오늘 날짜보다 이전이면 이동 차단
+    const lastDayOfNewWeek = new Date(newWeekStart);
+    lastDayOfNewWeek.setDate(newWeekStart.getDate() + 6); // 일주일치의 마지막 날짜
+    if (lastDayOfNewWeek < today) {
+      return; // 일주일치의 마지막 날짜가 오늘보다 이전이면 이동하지 않음
+    }
+
+    currentWeekStart = newWeekStart;
+    generateDateButtons();
+  });
+
+  nextWeekBtn.addEventListener('click', () => {
+    const newWeekStart = new Date(currentWeekStart);
+    newWeekStart.setDate(currentWeekStart.getDate() + 7);
+
+    // 최대 30일 이후로 가지 않도록 제한
+    if (newWeekStart > maxFutureDate) {
+      return; // 30일 이후로 이동하지 않음
+    }
+
+    currentWeekStart = newWeekStart;
+    generateDateButtons();
+  });
+
+  // 초기 로드 시 날짜 버튼 생성
+  if (!currentWeekStart) {
+    currentWeekStart = new Date();
+    currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay());
+  }
+
+  // 오늘 날짜보다 이전으로 설정되지 않도록 조정
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  if (newWeekStart < today) {
-    return; // 과거로 이동하지 않음
+  if (currentWeekStart < today) {
+    currentWeekStart = new Date(today);
+    currentWeekStart.setDate(today.getDate() - today.getDay()); // 오늘 주의 일요일로 설정
   }
-  
-  currentWeekStart = newWeekStart;
-  generateDateButtons();
-});
 
-document.getElementById('next-week').addEventListener('click', () => {
-  const newWeekStart = new Date(currentWeekStart);
-  newWeekStart.setDate(currentWeekStart.getDate() + 7);
-  
-  // 최대 30일 이후로 가지 않도록 제한
-  if (newWeekStart > maxFutureDate) {
-    return; // 30일 이후로 이동하지 않음
-  }
-  
-  currentWeekStart = newWeekStart;
   generateDateButtons();
 });
   
