@@ -1,4 +1,42 @@
 const apiKey = '21e386e0d770c1af30c85902f8078bd9';
+const tmdbApiKey = '234ef78df71e08e515ca2d691678e0f1';
+const tmdbBaseUrl = 'https://api.themoviedb.org/3';
+const tmdbImageBase = 'https://image.tmdb.org/t/p/original';
+
+
+function fetchPosterUrl(movieName) {
+  return fetch(`https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${encodeURIComponent(movieName)}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.results && data.results.length > 0 && data.results[0].backdrop_path) {
+        return `https://image.tmdb.org/t/p/w1280${data.results[0].backdrop_path}`;
+      } else {
+        return null;
+      }
+    })
+    .catch(err => {
+      console.error('TMDB 이미지 불러오기 실패:', err);
+      return null;
+    });
+}
+
+
+function fetchBackdrop(movieName) {
+  fetch(`https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${encodeURIComponent(movieName)}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data.results && data.results.length > 0) {
+        const backdropPath = data.results[0].backdrop_path;
+        if (backdropPath) {
+          const backdropUrl = `https://image.tmdb.org/t/p/w1280${backdropPath}`;
+          document.querySelector('.poster-background').style.backgroundImage = `url(${backdropUrl})`;
+        }
+      }
+    })
+    .catch(err => console.error('TMDB 백드롭 이미지 불러오기 실패:', err));
+}
+
+
 function getQueryParam(name) {
   const params = new URLSearchParams(window.location.search);
   return params.get(name);
@@ -100,6 +138,11 @@ function updateTimeSection() {
 
     document.querySelectorAll('.hour-btn').forEach(button => {
       button.addEventListener('click', () => {
+        // 기존 active 제거
+        document.querySelectorAll('.hour-btn').forEach(btn => btn.classList.remove('active'));
+        // 클릭한 버튼에 active 추가
+        button.classList.add('active');
+    
         const selectedHour = parseInt(button.dataset.hour);
         const filteredTimes = allTimes.filter(t => {
           const hour = parseInt(t.start.split(':')[0]);
@@ -108,6 +151,7 @@ function updateTimeSection() {
         generateTimeSlots(filteredTimes);
       });
     });
+    
 
   } else {
     section.innerHTML = '영화와 극장을 선택하시면<br>상영시간표를 비교하여 볼 수 있습니다.';
@@ -155,8 +199,17 @@ fetch(`https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDail
         document.querySelectorAll('.movie-item').forEach(el => el.classList.remove('selected'));
         div.classList.add('selected');
         selectedMovie = movie.movieNm;
+      
+        fetchPosterUrl(movie.movieNm).then(posterUrl => {
+          if (posterUrl) {
+            document.querySelector('.poster-background').style.backgroundImage = `url(${posterUrl})`;
+          }
+        });
+      
         updateTimeSection();
+        fetchBackdrop(selectedMovie);
       });
+      
       listEl.appendChild(div);
     });
         // movieList.forEach(...) 내부 끝난 직후 추가
@@ -164,16 +217,24 @@ fetch(`https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDail
           const preMovie = movieList.find(m => m.movieCd === preselectedMovieCd);
           if (preMovie) {
             selectedMovie = preMovie.movieNm;
-            // 해당 movie-item을 선택 표시
+        
             const items = document.querySelectorAll('.movie-item');
             items.forEach(el => {
               if (el.textContent === selectedMovie) {
                 el.classList.add('selected');
               }
             });
+        
+            fetchPosterUrl(preMovie.movieNm).then(posterUrl => {
+              if (posterUrl) {
+                document.querySelector('.poster-background').style.backgroundImage = `url(${posterUrl})`;
+              }
+            });
+        
             updateTimeSection();
           }
         }
+        
     
   })
   .catch(err => console.error('영화 목록 불러오기 실패:', err));

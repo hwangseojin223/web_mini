@@ -142,7 +142,6 @@ $(function(){
     }
   })
 
-<<<<<<< HEAD
   $('#reserveBtn').click(function() {
     window.location.href = `reserve.html?movieCd=${movieCd}`;
   });
@@ -157,7 +156,6 @@ $(function(){
   //       $(this).find(".submenu").stop(true, true).slideUp(300);
   //   }
   // );
-=======
   /** 댓글입력력 */
   // 별점 선택 처리
 document.querySelectorAll(".stars span").forEach(star => {
@@ -190,5 +188,4 @@ document.querySelectorAll(".star-display").forEach(el => {
   el.style.setProperty("--score", percent + "%");
 });
 
->>>>>>> 05339739ab539c0f8296743d0a30e5ddf77382ab
 });
