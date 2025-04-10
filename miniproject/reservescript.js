@@ -403,4 +403,3 @@ document.querySelectorAll('.region-item').forEach(region => {
     });
   });
 });
-
