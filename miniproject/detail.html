@@ -131,8 +131,8 @@
       text-decoration: none; 
   }
 
-  /*댓글 부분*/
-  .comment-form, .comment-box {
+  /*댓글 입력 부분*/
+  .comment-form {
     border: 1px solid #ccc;
     padding: 16px;
     margin-bottom: 20px;
@@ -151,7 +151,8 @@
     margin-right: 10px;
   }
   
-  .rating-box p, .recommend-box p {
+  .rating-box p,
+  .recommend-box p {
     margin: 10px 0 5px;
   }
   
@@ -162,10 +163,37 @@
     background: url('https://cdn-icons-png.flaticon.com/512/1828/1828884.png') no-repeat center/cover;
     opacity: 0.3;
     cursor: pointer;
+    position: relative;
   }
+  
   .stars span.selected {
     opacity: 1;
   }
+  
+  
+  /* 기본 별 배경 제거 */
+  .stars span.half {
+    background: none; 
+  
+  }
+  
+  .stars span.half::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 12px; /* 별의 왼쪽 절반 */
+    height: 100%;
+    background: url('https://cdn-icons-png.flaticon.com/512/1828/1828884.png') no-repeat left center;
+    background-size: cover;
+    opacity: 1;
+  }
+
+  .bye {
+    background: none; 
+  }
+  
+  
   
   .recommend-box label {
     margin-right: 10px;
@@ -188,6 +216,26 @@
     border-radius: 4px;
     cursor: pointer;
   }
+
+  /* 댓글부분*/
+  .comment-box {
+    border: 1px solid #ccc;
+    padding: 16px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #fafafa;
+  }
+  
+  .user-prof {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .user-prof img {
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
   
   .star-display {
     display: inline-block;
@@ -206,6 +254,20 @@
     padding: 0;             /* 기본 왼쪽 들여쓰기 제거 */
     margin: 0;
   }
+
+
+  /*동적으로 생성된 댓글의 좋았던 점(em.tag)에 대한 스타일일*/
+  .tag {
+    display: inline-block;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 4px 8px;
+    margin-right: 4px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-style: normal; /* em의 기울임 제거 */
+  }
+
   
   </style>
 </head>
@@ -320,29 +382,13 @@
     <label><input type="checkbox" value="OST"> OST</label>
   </div>
 
-  <textarea placeholder="관람평을 입력해주세요" rows="4"></textarea>
-  <button type="button" onclick="submitComment()">등록</button>
+  <textarea placeholder="관람평을 입력해주세요" rows="4" id="comment"></textarea>
+  <button type="button" id="addComment">등록</button>
 </div>
 
 <!-- 댓글 리스트 -->
 <ul class="comment-list">
-  <li>
-    <div class="comment-box">
-      <div class="user-prof">
-        <img src="https://img.megabox.co.kr/SharedImg/asis/user/profile/2018/04/20/A9/E05BAC-B9EA-4FDF-84C9-A7F36A8C4CEA.large.jpg" alt="프로필">
-        <p class="user-id">qu**core</p>
-      </div>
-      <div class="story-cont">
-        <div class="story-point">
-          <strong>평점:</strong>
-          <div class="star-display" data-score="6"></div>
-        </div>
-        <div class="story-recommend"><em>연출</em><em>배우</em></div>
-        <div class="story-txt">연기 좋고 클리셰를 부순 건 좋으나 평탄함. TV드라마로 더 좋았을 듯.</div>
-        <div class="story-like">👍 추천수: 0</div>
-      </div>
-    </div>
-  </li>
+  
 </ul>
 
 

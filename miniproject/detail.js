@@ -98,7 +98,7 @@ $(function(){
                 $.each(response.results, function(index, item){
                   if(((item.release_date.slice(0, 4) === prdYear)&&(item.title == movieTitle)) || (item.title == movieTitle)){
                     obj = item;
-                    console.log(obj)
+                    //console.log(obj)
                   }
                 })
               }else{
@@ -142,7 +142,6 @@ $(function(){
     }
   })
 
-<<<<<<< HEAD
   $('#reserveBtn').click(function() {
     window.location.href = `reserve.html?movieCd=${movieCd}`;
   });
@@ -157,38 +156,84 @@ $(function(){
   //       $(this).find(".submenu").stop(true, true).slideUp(300);
   //   }
   // );
-=======
+
   /** 댓글입력력 */
-  // 별점 선택 처리
-document.querySelectorAll(".stars span").forEach(star => {
-  star.addEventListener("click", function () {
-    const rating = this.getAttribute("data-value");
-    document.getElementById("rating").value = rating * 2; // 1~5 → 2~10
-    document.querySelectorAll(".stars span").forEach(s => s.classList.remove("selected"));
-    for (let i = 0; i < rating; i++) {
-      document.querySelectorAll(".stars span")[i].classList.add("selected");
+
+  // 1. 평점, 좋았던점, 코멘트를를 담을 변수
+  let score = 0;    // 평점
+  let goodJob = []  // 좋았던 점
+  let comment = ''  // 코멘트트
+
+  // 2. 별점 선택 처리
+  $(".stars span").on("click", function (e) {
+    const $this = $(this);
+    const offset = $this.offset();
+    const width = $this.outerWidth();
+    const offsetX = e.pageX - offset.left;
+    const index = $this.index();
+  
+    // 점수 계산
+    score = offsetX < width / 2 ? index + 0.5 : index + 1;
+    $("#rating").val(score); // 10점 만점으로 저장
+  
+    // 모든 별 초기화
+    $(".stars span").removeClass("selected half");
+  
+    // 정수 부분까지 selected
+    for (let i = 0; i < Math.floor(score); i++) {
+      $(".stars span").eq(i).addClass("selected");
+    }
+  
+    // 반쪽 별
+    if (score % 1 === 0.5) {
+      $(".stars span").eq(Math.floor(score)).addClass("selected half");
     }
   });
-});
 
-// 댓글 등록 예시 함수
-function submitComment() {
-  const rating = document.getElementById("rating").value;
-  const checked = [...document.querySelectorAll(".recommend-box input:checked")].map(cb => cb.value);
-  const text = document.querySelector("textarea").value;
+  // 3. 등록버튼 눌렀을 때때 
+  $('#addComment').click(function(){
+    //console.log(typeof $('#comment').val()) //string
+    if($('#comment').val() == ''){
+      alert('코멘트를 입력해주세요')
+    }else{
+      // 4. 좋았던 점 저장
+      $('.recommend-box input:checked').each(function(index, item){
+        goodJob.push($(this).val())
+      })
+      console.log(goodJob)
 
-  console.log("별점:", rating);
-  console.log("좋았던 점:", checked);
-  console.log("댓글 내용:", text);
-  alert("댓글이 등록되었습니다 (콘솔 확인)");
-}
+      // 좋았던 점 문자열 생성
+      goodJobString = ''
+      $.each(goodJob, function(index, item){
+        goodJobString += `<em class="tag">${item}</em> &nbsp`
+      })
+      console.log(goodJobString)
 
-// 댓글 평점 별로 표시 (6점 = 60% 골드)
-document.querySelectorAll(".star-display").forEach(el => {
-  const score = el.getAttribute("data-score");
-  const percent = score * 10;
-  el.style.setProperty("--score", percent + "%");
-});
+      // 5. 코멘트 저장
+      comment = $('#comment').val()
 
->>>>>>> 05339739ab539c0f8296743d0a30e5ddf77382ab
+      let lastComment = `<li>
+                            <div class="comment-box">
+                              <div class="user-prof">
+                                <img src="https://img.megabox.co.kr/SharedImg/asis/user/profile/2018/04/20/A9/E05BAC-B9EA-4FDF-84C9-A7F36A8C4CEA.large.jpg" alt="프로필">
+                                <p class="user-id">qu**core</p>
+                              </div>
+                              <div class="story-cont">
+                                <div class="story-point">
+                                  <strong>평점:${score}</strong>
+                                  <div class="star-display" data-score="${score}"></div>
+                                </div>
+                                <div class="story-recommend">${goodJobString}</div>
+                                <div class="story-txt">${comment}</div>
+                                <div class="story-like">👍 추천수: 0</div>
+                              </div>
+                            </div>
+                          </li>
+                        `
+      //6. 템플릿에 맞게 출력
+      $('.comment-list').append(lastComment)
+    } 
+  })
+
+
 });
