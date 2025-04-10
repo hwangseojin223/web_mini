@@ -15,7 +15,7 @@ body {
     padding-left: 10px;
   }
   
-  .date-selector button {
+  /* .date-selector button {
     margin: 5px 5px 10px 0;
     padding: 8px 14px;
     border: 1px solid #ccc;
@@ -29,7 +29,7 @@ body {
     background-color: #5A1E94;
     color: white;
     border: none;
-  }
+  } */
   
   .movie-item {
     padding: 12px;
@@ -167,3 +167,90 @@ body {
     background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 80%);
   }
   
+  
+  .date-selector-wrapper {
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .date-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  #current-month-year {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .date-nav-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px 10px;
+    color: #5A1E94;
+  }
+  
+  .date-nav-btn:hover {
+    color: #3a1261;
+  }
+  
+  #date-selector {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+  }
+  
+  .date-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border: none;
+    background-color: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .date-btn:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .date-btn.selected {
+    background-color: #5A1E94;
+    color: white;
+  }
+  
+  .date-btn .day-of-week {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+  
+  .date-btn .day {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .date-btn.sunday .day-of-week,
+  .date-btn.sunday .day {
+    color: #d9534f; /* 일요일: 빨간색 */
+  }
+  
+  .date-btn.saturday .day-of-week,
+  .date-btn.saturday .day {
+    color: #007bff; /* 토요일: 파란색 */
+  }
+  
+  .date-btn.selected .day-of-week,
+  .date-btn.selected .day {
+    color: white;
+  }

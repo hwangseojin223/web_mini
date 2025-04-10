@@ -3,6 +3,11 @@ const tmdbApiKey = '234ef78df71e08e515ca2d691678e0f1';
 const tmdbBaseUrl = 'https://api.themoviedb.org/3';
 const tmdbImageBase = 'https://image.tmdb.org/t/p/original';
 
+let currentWeekStart = new Date();
+currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay()); // 일요일로 설정
+const today = new Date();
+const maxFutureDate = new Date(today);
+maxFutureDate.setDate(today.getDate() + 30); // 최대 30일 이후까지만 허용
 
 function fetchPosterUrl(movieName) {
   return fetch(`https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${encodeURIComponent(movieName)}`)
@@ -162,20 +167,6 @@ function updateTimeSection() {
   updateBookButton();
 }
 
-document.querySelectorAll('.date-selector button').forEach(button => {
-  button.addEventListener('click', () => {
-    document.querySelectorAll('.date-selector button').forEach(btn => btn.classList.remove('selected'));
-    button.classList.add('selected');
-
-    const label = button.textContent.split(' - ')[0];
-    const [month, day] = label.split('/').map(Number);
-    const now = new Date();
-    const newDate = new Date(now.getFullYear(), month - 1, day);
-    selectedDate = newDate.toISOString().slice(0, 10).replace(/-/g, '');
-
-    updateTimeSection();
-  });
-});
 
 document.getElementById('book-now').addEventListener('click', () => {
   if (selectedMovie && selectedTheater && selectedDate && selectedTime) {
@@ -239,6 +230,111 @@ fetch(`https://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDail
   })
   .catch(err => console.error('영화 목록 불러오기 실패:', err));
 
+  function updateMonthYearDisplay() {
+    const monthYearEl = document.getElementById('current-month-year');
+    const year = currentWeekStart.getFullYear();
+    const month = String(currentWeekStart.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+    monthYearEl.textContent = `${year}.${month}`;
+  }
+  
+  function generateDateButtons() {
+    const container = document.getElementById('date-selector');
+    container.innerHTML = '';
+  
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // 시간 비교를 위해 오늘 날짜의 시간을 00:00:00으로 설정
+  
+    // 한국어 요일 배열 (getDay()는 0:일요일, 1:월요일, ..., 6:토요일)
+    const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+  
+    const formatter = new Intl.DateTimeFormat('ko-KR', {
+      day: '2-digit',
+    });
+  
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(currentWeekStart);
+      date.setDate(currentWeekStart.getDate() + i);
+  
+      // 날짜 숫자만 추출 (단위 "일" 제거)
+      const day = date.getDate().toString().padStart(2, '0'); // 숫자만 사용
+      const weekday = weekdays[date.getDay()]; // 요일을 직접 계산
+  
+      const btn = document.createElement('button');
+      btn.className = 'date-btn';
+  
+      // 요일과 날짜를 세로로 배치 (날짜에서 "일" 제거)
+      btn.innerHTML = `
+        <span class="day-of-week">${weekday}</span>
+        <span class="day">${day}</span>
+      `;
+  
+      // 오늘 날짜 선택
+      if (
+        date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+      ) {
+        btn.classList.add('selected');
+        selectedDate = date.toISOString().slice(0, 10).replace(/-/g, '');
+      }
+  
+      // 주말 강조 (일요일: 빨간색, 토요일: 파란색)
+      const isSunday = date.getDay() === 0;
+      const isSaturday = date.getDay() === 6;
+      if (isSunday) btn.classList.add('sunday');
+      if (isSaturday) btn.classList.add('saturday');
+  
+      // 과거 날짜 비활성화
+      if (date < today) {
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+      } else {
+        // 클릭 이벤트
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#date-selector .date-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          selectedDate = date.toISOString().slice(0, 10).replace(/-/g, '');
+          updateTimeSection();
+        });
+      }
+  
+      container.appendChild(btn);
+    }
+  
+    updateMonthYearDisplay();
+  }
+  
+// 좌우 화살표 이벤트 추가
+document.getElementById('prev-week').addEventListener('click', () => {
+  const newWeekStart = new Date(currentWeekStart);
+  newWeekStart.setDate(currentWeekStart.getDate() - 7);
+  
+  // 오늘 날짜보다 이전으로 가지 않도록 제한
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  if (newWeekStart < today) {
+    return; // 과거로 이동하지 않음
+  }
+  
+  currentWeekStart = newWeekStart;
+  generateDateButtons();
+});
+
+document.getElementById('next-week').addEventListener('click', () => {
+  const newWeekStart = new Date(currentWeekStart);
+  newWeekStart.setDate(currentWeekStart.getDate() + 7);
+  
+  // 최대 30일 이후로 가지 않도록 제한
+  if (newWeekStart > maxFutureDate) {
+    return; // 30일 이후로 이동하지 않음
+  }
+  
+  currentWeekStart = newWeekStart;
+  generateDateButtons();
+});
+  
+
 const theaterData = {
   '서울': ['강남', '신촌', '홍대'],
   '경기': ['수원', '성남', '고양'],
@@ -273,3 +369,4 @@ document.querySelectorAll('.region-item').forEach(region => {
     });
   });
 });
+
