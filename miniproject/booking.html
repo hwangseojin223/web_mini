@@ -107,18 +107,39 @@
             background-color: #218838;
           }
           #booking-info {
-            background-color: #f5f5f5;
-            padding: 15px 25px;
-            border-radius: 10px;
-            border: 2px solid #007bff;
+            background-color: #ffffff; /* 단색 배경 */
+            padding: 18px 28px;
+            border-radius: 12px;
+            border: 1.5px solid #3498db;
             font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            white-space: nowrap; /* 한 줄 유지 */
+            font-weight: 600;
+            color: #2c3e50;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            display: inline-flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
           }
+          
           #booking-info span {
             font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+          }
+          
+          #booking-info .divider {
+            color: #ccc;
+            font-size: 14px;
+          }
+          
+          /* Optional hover effect */
+          #booking-info:hover {
+            transform: scale(1.01);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
           }
         </style>
 </head>
