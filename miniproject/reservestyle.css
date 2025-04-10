@@ -245,3 +245,20 @@ body {
   margin-bottom: 4px;
   transition: top 0.3s;
 }
+
+#search-form > button {
+  margin-left: 15px;
+  background: linear-gradient(135deg, #3B82F6, #06B6D4);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 25px;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease-in-out;
+}
+#search-form > button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+  background: linear-gradient(135deg, #D946EF, #8B5CF6);
+}
