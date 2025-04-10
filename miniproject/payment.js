@@ -73,3 +73,22 @@ function fetchPoster(title, callback) {
       });
     }
   });
+
+  payBtn.addEventListener('click', () => {
+    const selectedPayment = document.querySelector('.payment-buttons .btn.selected').textContent.trim();
+  
+    const queryParams = new URLSearchParams({
+      movie,
+      theater,
+      date,
+      time,
+      seats,
+      adult,
+      teen,
+      discount,
+      price
+    });
+  
+    window.location.href = `ticket.html?${queryParams.toString()}`;
+  });
+  
