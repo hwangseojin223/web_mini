@@ -1,3 +1,78 @@
+#latest-movie-wrapper {
+    position: relative;
+  }
+  
+  .nav-buttons {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    padding: 0 20px;
+  }
+  
+  .nav-btn {
+    background-color: rgba(0, 0, 0, 0.5); /* 깔끔한 어두운 배경 */
+    color: white;
+    font-size: 24px; /* 적당한 크기의 화살표 */
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s, transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    outline: none;
+  }
+  
+  .nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8); /* 호버 시 어두운 배경 */
+  }
+  
+  .nav-btn:active {
+    transform: scale(0.95); /* 클릭 시 버튼 크기 살짝 줄어듬 */
+  }
+  
+  /* 화살표 아이콘 스타일 */
+  .nav-btn:before {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 12px solid white;
+    transition: transform 0.3s ease;
+  }
+  
+  /* 이전 버튼 화살표 반전 */
+  #prev-btn:before {
+    transform: rotate(180deg); /* 이전 화살표는 반전시켜서 왼쪽 화살표로 */
+  }
+  
+  /* 다음 버튼 화살표 기본 방향 */
+  #next-btn:before {
+    transform: rotate(0deg); /* 기본 화살표는 오른쪽 */
+  }
+  
+  /* 반응형 디자인: 모바일에서 버튼 크기 조정 */
+  @media (max-width: 768px) {
+    .nav-btn {
+      font-size: 20px;
+      padding: 8px;
+    }
+  }
+  
+body, button, input, a {
+    font-family: 'Pretendard', sans-serif;
+    color: var(--text-dark);
+}
+body {
+    background: linear-gradient(to right, #f8f5ff, #e6e0ff);
+    font-family: 'Pretendard', sans-serif;
+    color: #333;
+}
 .navbar {
     margin-bottom: 4px;
     border-radius: 16px;
@@ -13,7 +88,7 @@
 
 #search-form > button {
     margin-left: 15px;
-    background: linear-gradient(135deg, #6D28D9, #9333EA);
+    background: linear-gradient(135deg, #3B82F6, #06B6D4);
     color: #fff;
     border: none;
     padding: 8px 18px;
@@ -24,7 +99,8 @@
 }
 #search-form > button:hover {
     transform: scale(1.05);
-    background: linear-gradient(135deg, #7C3AED, #A855F7);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+    background: linear-gradient(135deg, #D946EF, #8B5CF6);
 }
 #latest-movie-list{
     display:flex;
@@ -52,7 +128,7 @@
     color: white;
 }
 #moviebtn button, .reserve-btn {
-    background: linear-gradient(135deg, #6D28D9, #9333EA);
+    background: linear-gradient(135deg, #9F7AEA, #F472B6);
     color: white;
     border: none;
     padding: 10px 24px;
@@ -206,10 +282,6 @@ footer {
     filter: brightness(0.7);
 }
 
-body, button, input, a {
-    font-family: 'Pretendard', sans-serif;
-    color: var(--text-dark);
-}
 
 
 #latest-movie-wrapper {

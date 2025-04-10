@@ -92,10 +92,10 @@
     <!-- 검색 폼 아래에 최신 영화 리스트 -->
     <div id="latest-movie-wrapper">
         <div id="latest-movie-list"></div> 
-        <div id="moviebtn">
+        <!-- <div id="moviebtn">
             <button type="button" id="prev-btn" class="btn btn-outline-dark">이전</button>
             <button type="button" id="next-btn" class="btn btn-outline-dark">다음</button>
-        </div>
+        </div> -->
     </div>
     <!-- 공지사항 -->
     <div class="notice">
@@ -157,60 +157,92 @@
         });
       
         function renderLatestMovies() {
-          
-            $('#latest-movie-list').empty();
-            let shownCount = 0;
-            let index = currentPage * 5;
-            
-            function tryNext() {
-              if (shownCount >= 5 || index >= latestMovies.length) return;
-          
-              const movie = latestMovies[index];
-              index++;
-          
-              fetchPoster(movie.title, null, function (posterUrl) {
-                if (posterUrl) {
-                  const html = `
-                  <div class="movie-card">
-                    <div class="poster-container" style="text-align:center; margin: 10px;">
-                        <img class ="movie-poster" src="${posterUrl}" width="150" style="border-radius:10px; margin-bottom:10px;">
+          $('#latest-movie-list').empty();
+          let shownCount = 0;
+          let index = currentPage * 5;
         
-                        <div class="overlay">
-                            <p>개봉일: ${movie.openDt}</p>
-                            <p>당일 관객: ${Number(movie.audiCnt).toLocaleString()}명</p>
-                            <p>누적 관객: ${Number(movie.audiAcc).toLocaleString()}명</p>
-                            <a href="detail.html?movieCd=${encodeURIComponent(movie.code)}" class="btn btn-light btn-sm detail-btn">상세보기</a>
-                        </div>
+          function tryNext() {
+            if (shownCount >= 5 || index >= latestMovies.length) return;
+        
+            const movie = latestMovies[index];
+            index++;
+        
+            fetchPoster(movie.title, null, function (posterUrl) {
+              if (posterUrl) {
+                const html = `
+                  <div class="movie-card" style="display: inline-block; margin-right: 20px;">
+                    <div class="poster-container" style="text-align:center; margin: 10px;">
+                      <img class="movie-poster" src="${posterUrl}" width="150" style="border-radius:10px; margin-bottom:10px;">
+                      <div class="overlay">
+                        <p>개봉일: ${movie.openDt}</p>
+                        <p>당일 관객: ${Number(movie.audiCnt).toLocaleString()}명</p>
+                        <p>누적 관객: ${Number(movie.audiAcc).toLocaleString()}명</p>
+                        <a href="detail.html?movieCd=${encodeURIComponent(movie.code)}" class="btn btn-light btn-sm detail-btn">상세보기</a>
+                      </div>
                     </div>
-                     <div class="movie-info" >
-                        <div class="movie-info-title" >${movie.title}
+                    <div class="movie-info">
+                      <div class="movie-info-title">${movie.title}
                         <a href="reserve.html?movieCd=${encodeURIComponent(movie.code)}" class="reserve-btn">예매하기</a>
+                      </div>
                     </div>
-                    </div>
-                </div>`;
-                  $('#latest-movie-list').append(html);
-                  shownCount++;
-                }
-                tryNext(); // 재귀 호출로 다음 영화 시도
-              });
-            }
-          
-            tryNext();
-        }
-        // 이전영화
-        $('#prev-btn').click(() => {
+                  </div>`;
+        
+                $('#latest-movie-list').append(html);
+                shownCount++;
+              }
+        
+              if (shownCount < 5 && index < latestMovies.length) {
+                setTimeout(tryNext, 50);
+              }
+            });
+          }
+        
+          tryNext();
+        
+          // 화살표 버튼 추가: 이전과 다음 버튼을 추가
+          const navButtons = $('<div class="nav-buttons"></div>');
+        
+          // 이전 버튼 (왼쪽 화살표)
+          const prevButton = $('<button id="prev-btn" class="nav-btn prev-btn">◁</button>');
+          navButtons.append(prevButton);
+        
+          // 다음 버튼 (오른쪽 화살표)
+          const nextButton = $('<button id="next-btn" class="nav-btn">▷</button>');
+          navButtons.append(nextButton);
+        
+          // 이미 화살표 버튼이 존재하지 않으면 추가
+          if (!$('#latest-movie-wrapper').find('.nav-buttons').length) {
+            $('#latest-movie-wrapper').append(navButtons);
+          }
+        
+          // 화살표 버튼 상태 조정
           if (currentPage > 0) {
-            currentPage--;
-            renderLatestMovies();
+            $('#prev-btn').css('visibility', 'visible');
+          } else {
+            $('#prev-btn').css('visibility', 'hidden');
           }
-        });
-        // 다음영화
-        $('#next-btn').click(() => {
+        
           if ((currentPage + 1) * 5 < latestMovies.length) {
-            currentPage++;
-            renderLatestMovies();
+            $('#next-btn').css('visibility', 'visible');
+          } else {
+            $('#next-btn').css('visibility', 'hidden');
           }
-        });
+        
+          // 버튼 클릭 이벤트 처리
+          $('#prev-btn').click(() => {
+            if (currentPage > 0) {
+              currentPage--;
+              renderLatestMovies();
+            }
+          });
+        
+          $('#next-btn').click(() => {
+            if ((currentPage + 1) * 5 < latestMovies.length) {
+              currentPage++;
+              renderLatestMovies();
+            }
+          });
+        }
       
         // TMDB 포스터 불러오기
         function fetchPoster(title, year, callback) {
