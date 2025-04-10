@@ -156,7 +156,6 @@ $(function(){
   //       $(this).find(".submenu").stop(true, true).slideUp(300);
   //   }
   // );
-
   /** 댓글입력력 */
 
   // 1. 평점, 좋았던점, 코멘트를를 담을 변수

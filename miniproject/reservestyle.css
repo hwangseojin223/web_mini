@@ -3,6 +3,7 @@ body {
     font-family: 'Noto Sans KR', sans-serif;
     padding: 20px;
     color: #333;
+    padding-top: 400px;
   }
   
   .section-title {
@@ -106,7 +107,10 @@ body {
   .hour-btn.active {
     background-color: #5A1E94;
     color: white;
+    font-weight: bold;
+    border: 1px solid #5A1E94;
   }
+  
   
   .time-grid {
     display: flex;
@@ -141,5 +145,25 @@ body {
     background-color: #eee;
     border-radius: 8px;
     font-size: 16px;
+  }
+  
+  .poster-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+    background-position: center 30%;
+    z-index: -1;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+  }
+  
+  
+  .overlay {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent 80%);
   }
   

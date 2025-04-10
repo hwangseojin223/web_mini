@@ -11,54 +11,86 @@
     <link rel="stylesheet" href="indexstyle.css">
 </head>
 <body>
-    <!-- 메뉴바 -->
-    <nav>
-        <div class="nav"></div>
-            <ul class="nav-links">
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">영화</a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">전체영화</a></li>
-                  </ul>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">예매</a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">빠른예매</a></li>
-                    <li><a class="dropdown-item" href="#">상영시간표</a></li>
-                  </ul>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">극장</a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">전체극장</a></li>
-                    <li><a class="dropdown-item" href="#">특별관</a></li>
-                  </ul>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">이벤트</a>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">진행중 이벤트</a></li>
-                    <li><a class="dropdown-item" href="#">특별 이벤트</a></li>
-                    <li><a class="dropdown-item" href="#">당첨자 발표</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown"><a href="#">스토어</a></li>
-                <li class="dropdown"><a href="#">혜택</a></li>
-                <li class="dropdown"><a href="#">마이페이지</a></li>
-            </ul>
-    </nav>
-    <!-- 검색 폼 -->
-    <div class="search">
-        <form id="search-form">
-            <input type="text" id="search-input" placeholder="영화 제목 입력" />
-            <button type="submit" class="btn btn-outline-dark">검색</button>
-          </form>
-          <ul id="search-result"></ul>
+  <!-- 메뉴바 -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-primary" href="#">🎬 Cinema</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px;">
+        
+        <!-- 영화 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            영화
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">전체영화</a></li>
+          </ul>
+        </li>
+
+        <!-- 예매 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            예매
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">빠른예매</a></li>
+            <li><a class="dropdown-item" href="#">상영시간표</a></li>
+          </ul>
+        </li>
+
+        <!-- 극장 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            극장
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">전체극장</a></li>
+            <li><a class="dropdown-item" href="#">특별관</a></li>
+          </ul>
+        </li>
+
+        <!-- 이벤트 -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            이벤트
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">진행중 이벤트</a></li>
+            <li><a class="dropdown-item" href="#">특별 이벤트</a></li>
+            <li><a class="dropdown-item" href="#">당첨자 발표</a></li>
+          </ul>
+        </li>
+
+        <!-- 스토어 / 혜택 / 마이페이지 -->
+        <li class="nav-item">
+          <a class="nav-link fw-semibold" href="#">스토어</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-semibold" href="#">혜택</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-semibold" href="#">마이페이지</a>
+        </li>
+      </ul>
+
+      <!-- 검색창 -->
+      <form id="search-form" class="d-flex">
+        <input id="search-input" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
+  </div>
+</nav>
+
+  
+
     <!-- 검색 폼 아래에 최신 영화 리스트 -->
     <div id="latest-movie-wrapper">
-        <h3 style="margin-left:20px;">🎬 박스오피스</h3>
         <div id="latest-movie-list"></div> 
         <div id="moviebtn">
             <button type="button" id="prev-btn" class="btn btn-outline-dark">이전</button>
@@ -87,16 +119,7 @@
     </footer>
 
     <script>
-        $(document).ready(function(){
-            $(".dropdown").hover(
-                function() {
-                    $(this).find(".submenu").stop(true, true).slideDown(300);
-                },
-                function() {
-                    $(this).find(".submenu").stop(true, true).slideUp(300);
-                }
-            );
-        });
+      
         // 공지사항
         $(document).ready(function () {
             
@@ -147,6 +170,7 @@
         });
       
         function renderLatestMovies() {
+          
             $('#latest-movie-list').empty();
             let shownCount = 0;
             let index = currentPage * 5;

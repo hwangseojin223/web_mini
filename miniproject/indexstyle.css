@@ -1,36 +1,9 @@
-.nav-links {
-    list-style : none;
-    display: flex;
-    justify-content: space-evenly;
-    border-bottom: black solid 1px;
-    border-top: black solid 1px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+.navbar {
     margin-top: 20px;
+    margin-bottom:4px;
 }
-.nav-links li{
-    position:relative;
-}
-.nav-links li a {
-    font-weight: bold;
-    color : black;
-    text-decoration: none; 
-}
-.submenu {
-    display: none;
-    position: absolute;
-    top:100%;
-    left:0;
-    white-space: nowrap;
-
-}
-.submenu li {
-    display: inline-block; 
-    list-style: none;
-    padding: 8px 16px;
-}
-.submenu li a {
-    font-weight:lighter;
+#latest-movie-wrapper{
+    margin-top:50px;
 }
 #search-form {
     display: flex;

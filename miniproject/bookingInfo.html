@@ -49,6 +49,8 @@
     <p id="theater"></p>
     <p id="date"></p>
     <p id="time"></p>
+    <p id="seats"></p>
+    <p id="people"></p>
     <button class="btn-home" onclick="goHome()">홈으로 돌아가기</button>
   </div>
 
@@ -58,6 +60,9 @@
     const theater = params.get('theater');
     const date = params.get('date');
     const time = params.get('time');
+    const seats = params.get('seats');
+    const people = params.get('people');
+
 
     document.getElementById('movie').textContent = `🎬 영화: ${movie}`;
     document.getElementById('theater').textContent = `📍 극장: ${theater}`;
@@ -65,7 +70,8 @@
     const dateFormatted = date ? `${date.slice(4,6)}월 ${date.slice(6)}일` : '';
     document.getElementById('date').textContent = `📅 날짜: ${dateFormatted}`;
     document.getElementById('time').textContent = `⏰ 시간: ${time}`;
-
+    document.getElementById('seats').textContent = `💺 좌석: ${seats}`;
+    document.getElementById('people').textContent = `👥 인원: ${people}명`;
     function goHome() {
       window.location.href = 'index.html'; // 예매 페이지로 돌아가기
     }
