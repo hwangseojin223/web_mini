@@ -102,10 +102,20 @@ $(function(){
                     obj = item;
                     //console.log(obj)
                   }
+
+                  if(obj == 0){
+
+                    if(item.title == movieTitle){
+                      obj = item;
+                      //console.log(obj)
+                    }
+                    
+                  }
                 })
-              }else{
+              }else if(response.results.length = 1){
                 obj = response.results[0]
               }
+              console.log(obj)
 
               const posterPath = obj.poster_path;
               const backDropPath = obj.backdrop_path
