@@ -15,7 +15,7 @@
 | 분야       | 사용 기술                              |
 |------------|-----------------------------------------|
 | Frontend   | HTML / CSS / JavaScript / jQuery / Bootstrap |
-| Storage        | LocalStorage (사용자 로그인 상태 유지)         |
+| Storage        | LocalStorage       |
 | Backend    | JSON Server                            |
 | Data       | Kobis API / TMDB API          |
 | Design     | Figma                                  |
@@ -49,3 +49,4 @@ npm start
 - 소셜 로그인 기능 추가
 - 페이지 전환 업데이트
 - 폴더 구조 개선
+- 실제 결제 시스템 추가
